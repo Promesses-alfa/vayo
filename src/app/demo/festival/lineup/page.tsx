@@ -83,6 +83,9 @@ export default function LineupBuilderPage() {
   const [selectedArtist, setSelectedArtist] = useState<typeof artistDatabase[0] | null>(null);
   const [showApproachModal, setShowApproachModal] = useState(false);
   const [draggedArtist, setDraggedArtist] = useState<typeof artistDatabase[0] | null>(null);
+  const [dragOverStage, setDragOverStage] = useState<string | null>(null);
+  const [isDragging, setIsDragging] = useState(false);
+  const [draggedSlot, setDraggedSlot] = useState<{stageId: string; index: number} | null>(null);
 
   const genres = ["all", "Techno", "House", "Progressive House", "Drum & Bass", "Synthwave", "Ambient", "Trance", "Dubstep", "Indie Rock"];
 
@@ -95,10 +98,28 @@ export default function LineupBuilderPage() {
 
   const handleDragStart = (artist: typeof artistDatabase[0]) => {
     setDraggedArtist(artist);
+    setIsDragging(true);
+    setDraggedSlot(null);
+  };
+
+  const handleSlotDragStart = (stageId: string, index: number) => {
+    setDraggedSlot({ stageId, index });
+    setIsDragging(true);
+    setDraggedArtist(null);
+  };
+
+  const handleDragOver = (e: React.DragEvent, stageId: string) => {
+    e.preventDefault();
+    setDragOverStage(stageId);
+  };
+
+  const handleDragLeave = () => {
+    setDragOverStage(null);
   };
 
   const handleDrop = (stageId: string) => {
     if (draggedArtist) {
+      // Adding new artist from database
       setLineup({
         ...lineup,
         [stageId]: [
@@ -106,8 +127,32 @@ export default function LineupBuilderPage() {
           { artist: draggedArtist, day: "TBD", time: "TBD", status: "inquiry" },
         ],
       });
-      setDraggedArtist(null);
+    } else if (draggedSlot) {
+      // Moving existing slot between stages
+      const { stageId: fromStage, index } = draggedSlot;
+      const movedSlot = lineup[fromStage][index];
+      
+      if (fromStage !== stageId) {
+        // Moving to a different stage
+        setLineup({
+          ...lineup,
+          [fromStage]: lineup[fromStage].filter((_, i) => i !== index),
+          [stageId]: [...lineup[stageId], movedSlot],
+        });
+      }
     }
+    
+    setDraggedArtist(null);
+    setDraggedSlot(null);
+    setDragOverStage(null);
+    setIsDragging(false);
+  };
+
+  const handleDragEnd = () => {
+    setDraggedArtist(null);
+    setDraggedSlot(null);
+    setDragOverStage(null);
+    setIsDragging(false);
   };
 
   const handleApproach = (artist: typeof artistDatabase[0]) => {
@@ -120,6 +165,13 @@ export default function LineupBuilderPage() {
       ...lineup,
       [stageId]: lineup[stageId].filter((_, i) => i !== index),
     });
+  };
+
+  const reorderWithinStage = (stageId: string, fromIndex: number, toIndex: number) => {
+    const items = [...lineup[stageId]];
+    const [removed] = items.splice(fromIndex, 1);
+    items.splice(toIndex, 0, removed);
+    setLineup({ ...lineup, [stageId]: items });
   };
 
   const totalBooked = Object.values(lineup).flat().length;
@@ -209,7 +261,10 @@ export default function LineupBuilderPage() {
                   key={artist.id}
                   draggable
                   onDragStart={() => handleDragStart(artist)}
-                  className="p-4 border-b border-gray-50 hover:bg-gray-50/50 cursor-grab active:cursor-grabbing transition-all group"
+                  onDragEnd={handleDragEnd}
+                  className={`p-4 border-b border-gray-50 hover:bg-gray-50/50 cursor-grab active:cursor-grabbing transition-all group ${
+                    draggedArtist?.id === artist.id ? "opacity-50 bg-[#a855f7]/10" : ""
+                  }`}
                 >
                   <div className="flex items-center gap-3">
                     <div className="w-2 h-full absolute left-0 bg-transparent group-hover:bg-[#a855f7] transition-all" />
@@ -246,9 +301,14 @@ export default function LineupBuilderPage() {
           {stages.map((stage) => (
             <div
               key={stage.id}
-              onDragOver={(e) => e.preventDefault()}
+              onDragOver={(e) => handleDragOver(e, stage.id)}
+              onDragLeave={handleDragLeave}
               onDrop={() => handleDrop(stage.id)}
-              className="bg-white border border-gray-100 rounded-3xl shadow-sm overflow-hidden"
+              className={`bg-white border-2 rounded-3xl shadow-sm overflow-hidden transition-all duration-200 ${
+                dragOverStage === stage.id 
+                  ? "border-[#a855f7] shadow-lg shadow-[#a855f7]/20 scale-[1.01]" 
+                  : "border-gray-100"
+              } ${isDragging ? "ring-2 ring-[#a855f7]/20" : ""}`}
             >
               {/* Stage Header */}
               <div className="p-6 border-b border-gray-100 bg-gray-50">
@@ -275,10 +335,17 @@ export default function LineupBuilderPage() {
                     {lineup[stage.id].map((slot, idx) => (
                       <div
                         key={idx}
-                        className="flex items-center justify-between p-4 bg-gray-50 rounded-2xl border border-gray-100 group hover:border-gray-200 transition-all"
+                        draggable
+                        onDragStart={() => handleSlotDragStart(stage.id, idx)}
+                        onDragEnd={handleDragEnd}
+                        className={`flex items-center justify-between p-4 bg-gray-50 rounded-2xl border border-gray-100 group hover:border-gray-200 transition-all cursor-grab active:cursor-grabbing ${
+                          draggedSlot?.stageId === stage.id && draggedSlot?.index === idx 
+                            ? "opacity-50 border-[#a855f7]" 
+                            : ""
+                        }`}
                       >
                         <div className="flex items-center gap-4">
-                          <GripVertical className="w-4 h-4 text-gray-300 cursor-grab" />
+                          <GripVertical className="w-4 h-4 text-gray-300 group-hover:text-[#a855f7]" />
                           <div className="w-10 h-10 rounded-xl bg-[#a855f7]/10 flex items-center justify-center text-[#a855f7] font-bold">
                             {slot.artist.name.charAt(0)}
                           </div>
@@ -306,9 +373,19 @@ export default function LineupBuilderPage() {
                     ))}
                   </div>
                 ) : (
-                  <div className="py-12 text-center border-2 border-dashed border-gray-200 rounded-2xl">
-                    <Music className="w-8 h-8 text-gray-300 mx-auto mb-2" />
-                    <p className="text-sm font-bold text-gray-400">Drag artists here</p>
+                  <div className={`py-12 text-center border-2 border-dashed rounded-2xl transition-all ${
+                    dragOverStage === stage.id 
+                      ? "border-[#a855f7] bg-[#a855f7]/5" 
+                      : "border-gray-200"
+                  }`}>
+                    <Music className={`w-8 h-8 mx-auto mb-2 transition-colors ${
+                      dragOverStage === stage.id ? "text-[#a855f7]" : "text-gray-300"
+                    }`} />
+                    <p className={`text-sm font-bold transition-colors ${
+                      dragOverStage === stage.id ? "text-[#a855f7]" : "text-gray-400"
+                    }`}>
+                      {dragOverStage === stage.id ? "Drop to add artist" : "Drag artists here"}
+                    </p>
                   </div>
                 )}
               </div>

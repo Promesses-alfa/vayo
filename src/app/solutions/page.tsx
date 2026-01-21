@@ -9,7 +9,9 @@ import {
   Theater, 
   Building2,
   ArrowRight,
-  CheckCircle2
+  CheckCircle2,
+  Disc3,
+  PartyPopper
 } from "lucide-react";
 
 const solutions = [
@@ -26,6 +28,36 @@ const solutions = [
       "Rider & technical requirements",
       "Multi-timezone scheduling",
       "Commission tracking per artist",
+    ],
+  },
+  {
+    id: "labels",
+    title: "For Record Labels",
+    description: "Complete label management from A&R to royalties. Track releases, manage your roster, and analyze streaming performance.",
+    icon: Disc3,
+    color: "bg-gradient-to-br from-violet-500 to-purple-500",
+    iconBg: "bg-violet-50",
+    href: "/solutions/labels",
+    features: [
+      "Release planning & distribution",
+      "Spotify & streaming analytics",
+      "Royalty tracking & splits",
+      "Artist roster development",
+    ],
+  },
+  {
+    id: "festivals",
+    title: "For Festivals",
+    description: "Plan and execute unforgettable events. Manage lineups, budgets, artist advancing, and stage schedules all in one place.",
+    icon: PartyPopper,
+    color: "bg-gradient-to-br from-pink-500 to-rose-500",
+    iconBg: "bg-pink-50",
+    href: "/solutions/festivals",
+    features: [
+      "Lineup builder with drag & drop",
+      "Artist database & search",
+      "Budget & expense tracking",
+      "Stage scheduling & timetables",
     ],
   },
   {
@@ -97,7 +129,7 @@ export default function SolutionsPage() {
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
             {solutions.map((solution) => (
               <div key={solution.id}>
                 <Link href={solution.href} className="block group h-full">

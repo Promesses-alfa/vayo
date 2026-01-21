@@ -15,6 +15,9 @@ import {
   Play,
   ArrowRight,
   Eye,
+  Share2,
+  PenTool,
+  BarChart3,
 } from "lucide-react";
 import Link from "next/link";
 
@@ -22,6 +25,9 @@ const navItems = [
   { label: "Dashboard", href: "/demo/label", icon: LayoutDashboard },
   { label: "Roster", href: "/demo/label/roster", icon: Users },
   { label: "Releases", href: "/demo/label/releases", icon: Disc3 },
+  { label: "Social Media", href: "/demo/label/social", icon: Share2 },
+  { label: "Contracts", href: "/demo/label/contracts", icon: PenTool },
+  { label: "Analytics", href: "/demo/label/analytics", icon: BarChart3 },
   { label: "Bookings", href: "/demo/label/bookings", icon: Calendar },
   { label: "Revenue", href: "/demo/label/revenue", icon: DollarSign },
   { label: "A&R Pipeline", href: "/demo/label/pipeline", icon: TrendingUp },
