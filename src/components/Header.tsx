@@ -13,7 +13,7 @@ const navItems = [
       { label: "Booking Management", href: "/features#booking" },
       { label: "Contract & Documents", href: "/features#contracts" },
       { label: "Financial Tools", href: "/features#finance" },
-      { label: "Tour Logistics", href: "/features#tours" },
+      { label: "How It Works", href: "/how-it-works" },
     ],
   },
   {
@@ -21,9 +21,9 @@ const navItems = [
     href: "/solutions",
     dropdown: [
       { label: "For Agencies", href: "/solutions/dj-agencies" },
-      { label: "For Festivals", href: "/solutions/touring-bands" },
-      { label: "For Artists", href: "/solutions/performing-arts" },
-      { label: "For Labels", href: "/solutions/enterprise" },
+      { label: "For Labels", href: "/solutions/labels" },
+      { label: "For Festivals", href: "/solutions/festivals" },
+      { label: "For Touring Bands", href: "/solutions/touring-bands" },
     ],
   },
   { label: "Pricing", href: "/pricing" },

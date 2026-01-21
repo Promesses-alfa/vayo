@@ -3,16 +3,16 @@ import Link from "next/link";
 const footerLinks = {
   Product: [
     { label: "Features", href: "/features" },
+    { label: "How It Works", href: "/how-it-works" },
     { label: "Pricing", href: "/pricing" },
     { label: "Integrations", href: "/integrations" },
-    { label: "API", href: "/api-reference" },
     { label: "Changelog", href: "/changelog" },
   ],
   Solutions: [
     { label: "For Agencies", href: "/solutions/dj-agencies" },
-    { label: "For Festivals", href: "/solutions/touring-bands" },
-    { label: "For Artists", href: "/solutions/performing-arts" },
-    { label: "For Labels", href: "/solutions/enterprise" },
+    { label: "For Labels", href: "/solutions/labels" },
+    { label: "For Festivals", href: "/solutions/festivals" },
+    { label: "For Touring Bands", href: "/solutions/touring-bands" },
   ],
   Company: [
     { label: "About", href: "/about" },
@@ -22,9 +22,10 @@ const footerLinks = {
     { label: "Contact", href: "/contact" },
   ],
   Legal: [
-    { label: "Privacy", href: "/privacy" },
-    { label: "Terms", href: "/terms" },
-    { label: "Cookies", href: "/cookies" },
+    { label: "Privacy Policy", href: "/privacy" },
+    { label: "Terms of Service", href: "/terms" },
+    { label: "Cookie Policy", href: "/cookies" },
+    { label: "DPA (GDPR)", href: "/dpa" },
   ],
 };
 
