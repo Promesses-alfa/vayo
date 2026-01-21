@@ -77,8 +77,8 @@ export default function PasswordGate({ children }: PasswordGateProps) {
           transition={{ duration: 0.8, ease: "easeInOut" }}
         >
           <svg 
-            viewBox="0 0 200 180" 
-            className="w-48 md:w-64 drop-shadow-[0_0_30px_rgba(139,0,0,0.5)]"
+            viewBox="-20 0 260 180" 
+            className="w-56 md:w-72 drop-shadow-[0_0_30px_rgba(139,0,0,0.5)]"
           >
             {/* Clown Face */}
             <ellipse cx="100" cy="90" rx="70" ry="80" fill="#f5e6d3" />
@@ -138,25 +138,27 @@ export default function PasswordGate({ children }: PasswordGateProps) {
               <ellipse cx="36" cy="14" rx="5" ry="13" fill="#f5e6d3" />
               <ellipse cx="43" cy="18" rx="5" ry="11" fill="#f5e6d3" />
             </g>
-            {/* Right hand with middle finger up! - positioned at right side */}
+            {/* Right hand with middle finger up! - positioned to the right of face */}
             <motion.g 
-              transform="translate(170, 145)"
-              animate={{ rotate: [0, -5, 0, 5, 0] }}
-              transition={{ repeat: Infinity, duration: 1.2, ease: "easeInOut" }}
+              transform="translate(185, 60)"
+              animate={{ rotate: [0, -8, 0, 8, 0] }}
+              transition={{ repeat: Infinity, duration: 1, ease: "easeInOut" }}
             >
+              {/* Arm */}
+              <ellipse cx="0" cy="30" rx="8" ry="20" fill="#f5e6d3" />
               {/* Wrist/Palm base */}
-              <ellipse cx="15" cy="25" rx="12" ry="8" fill="#f5e6d3" />
+              <ellipse cx="0" cy="5" rx="12" ry="10" fill="#f5e6d3" />
               {/* Curled pinky */}
-              <ellipse cx="2" cy="18" rx="4" ry="6" fill="#f5e6d3" />
+              <ellipse cx="-12" cy="8" rx="4" ry="6" fill="#f5e6d3" />
               {/* Curled ring finger */}
-              <ellipse cx="8" cy="15" rx="4" ry="6" fill="#f5e6d3" />
+              <ellipse cx="-6" cy="5" rx="4" ry="7" fill="#f5e6d3" />
               {/* MIDDLE FINGER - straight up! */}
-              <ellipse cx="15" cy="-5" rx="5" ry="18" fill="#f5e6d3" />
-              <ellipse cx="15" cy="-20" rx="4" ry="6" fill="#f5e6d3" />
+              <ellipse cx="0" cy="-18" rx="5" ry="20" fill="#f5e6d3" />
+              <ellipse cx="0" cy="-35" rx="4" ry="6" fill="#f5e6d3" />
               {/* Curled index */}
-              <ellipse cx="22" cy="15" rx="4" ry="6" fill="#f5e6d3" />
+              <ellipse cx="6" cy="5" rx="4" ry="7" fill="#f5e6d3" />
               {/* Curled thumb */}
-              <ellipse cx="28" cy="20" rx="5" ry="4" fill="#f5e6d3" />
+              <ellipse cx="12" cy="10" rx="6" ry="4" fill="#f5e6d3" />
             </motion.g>
           </svg>
         </motion.div>
