@@ -3,60 +3,88 @@
 import { motion } from "framer-motion";
 import { useInView } from "framer-motion";
 import { useRef, useState } from "react";
-import { Check, Sparkles } from "lucide-react";
+import { Check, Users, Music, Building2, PartyPopper, ArrowRight } from "lucide-react";
 
-const plans = [
+const stakeholderPlans = [
   {
-    name: "Starter",
-    description: "Perfect for small agencies just getting started",
-    monthlyPrice: 49,
-    yearlyPrice: 39,
-    features: [
-      "Up to 5 team members",
-      "25 active artists",
-      "500 bookings/year",
-      "Basic contract templates",
-      "Email support",
-      "Calendar integrations",
-    ],
-    cta: "Start Free Trial",
-    popular: false,
-  },
-  {
-    name: "Professional",
-    description: "For growing agencies with bigger ambitions",
+    id: "agencies",
+    name: "For Agencies",
+    icon: Users,
+    color: "bg-[#00d4aa]",
+    description: "Manage roster, bookings & client relationships",
     monthlyPrice: 149,
     yearlyPrice: 119,
     features: [
-      "Up to 20 team members",
-      "Unlimited artists",
-      "Unlimited bookings",
-      "Custom contract templates",
+      "Unlimited artist roster",
+      "Smart booking management",
+      "Contract generation & e-signatures",
       "Financial reporting",
-      "Tour management tools",
-      "Priority support",
-      "API access",
+      "Tour & logistics planning",
+      "Calendar sync",
+      "Client portal",
+      "API integrations",
     ],
-    cta: "Start Free Trial",
-    popular: true,
+    highlight: "Connect with festivals directly",
   },
   {
-    name: "Enterprise",
-    description: "For large agencies requiring custom solutions",
-    monthlyPrice: null,
-    yearlyPrice: null,
+    id: "festivals",
+    name: "For Festivals",
+    icon: PartyPopper,
+    color: "bg-[#a855f7]",
+    description: "Build lineups & manage advancing",
+    monthlyPrice: 199,
+    yearlyPrice: 159,
     features: [
-      "Unlimited team members",
-      "Unlimited everything",
-      "Custom integrations",
-      "Dedicated account manager",
-      "Custom training",
-      "SLA guarantee",
-      "White-label options",
-      "Advanced analytics",
+      "AI-powered lineup suggestions",
+      "Direct agency connections",
+      "Advancing automation",
+      "Stage & schedule management",
+      "Budget tracking",
+      "Rider management",
+      "Artist logistics portal",
+      "Real-time collaboration",
     ],
-    cta: "Contact Sales",
-    popular: false,
+    highlight: "Book artists through VAYO",
+  },
+  {
+    id: "artists",
+    name: "For Artists",
+    icon: Music,
+    color: "bg-[#f97316]",
+    description: "All your tour info in one place",
+    monthlyPrice: 29,
+    yearlyPrice: 19,
+    features: [
+      "Complete tour schedule",
+      "Document access",
+      "Travel & accommodation",
+      "Offline mobile app",
+      "Push notifications",
+      "Direct messaging",
+      "Earnings overview",
+      "Calendar sync",
+    ],
+    highlight: "Free when your agency uses VAYO",
+  },
+  {
+    id: "labels",
+    name: "For Labels",
+    icon: Building2,
+    color: "bg-[#3b82f6]",
+    description: "Track touring activity & revenue",
+    monthlyPrice: 99,
+    yearlyPrice: 79,
+    features: [
+      "Multi-artist dashboard",
+      "Booking pipeline",
+      "Revenue tracking",
+      "Release coordination",
+      "Agency collaboration",
+      "Tour analytics",
+      "Contract templates",
+      "Brand assets",
+    ],
+    highlight: "Connect with partner agencies",
   },
 ];
 
@@ -66,8 +94,8 @@ export default function Pricing() {
   const [isYearly, setIsYearly] = useState(true);
 
   return (
-    <section id="pricing" ref={ref} className="section relative">
-      <div className="container mx-auto">
+    <section id="pricing" ref={ref} className="py-24 bg-white">
+      <div className="container mx-auto px-6">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -75,25 +103,23 @@ export default function Pricing() {
           transition={{ duration: 0.6 }}
           className="text-center mb-12"
         >
-          <span className="badge mb-4">Pricing</span>
-          <h2
-            className="text-3xl md:text-5xl font-bold text-white mb-6"
-            style={{ fontFamily: "var(--font-syne)" }}
-          >
-            Simple, <span className="text-gradient">Transparent</span> Pricing
+          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6" style={{ fontFamily: "var(--font-syne)" }}>
+            One platform,<br />
+            <span className="text-[#a855f7]">built for everyone</span>
           </h2>
-          <p className="text-[var(--vayo-gray-400)] max-w-xl mx-auto mb-8">
-            Choose the plan that fits your agency. All plans include a 14-day free trial.
+          <p className="text-gray-500 max-w-2xl mx-auto mb-8">
+            Whether you're an agency, festival, artist, or label — VAYO has a plan for you.
+            All modules connect seamlessly.
           </p>
 
           {/* Billing Toggle */}
-          <div className="inline-flex items-center gap-4 p-1.5 rounded-full bg-[var(--vayo-gray-900)] border border-[var(--vayo-gray-800)]">
+          <div className="inline-flex items-center gap-1 p-1 rounded-full bg-gray-100">
             <button
               onClick={() => setIsYearly(false)}
               className={`px-5 py-2 rounded-full text-sm font-medium transition-all ${
                 !isYearly
-                  ? "bg-[var(--vayo-accent)] text-white"
-                  : "text-[var(--vayo-gray-400)] hover:text-white"
+                  ? "bg-white text-gray-900 shadow-sm"
+                  : "text-gray-500 hover:text-gray-700"
               }`}
             >
               Monthly
@@ -102,100 +128,95 @@ export default function Pricing() {
               onClick={() => setIsYearly(true)}
               className={`px-5 py-2 rounded-full text-sm font-medium transition-all flex items-center gap-2 ${
                 isYearly
-                  ? "bg-[var(--vayo-accent)] text-white"
-                  : "text-[var(--vayo-gray-400)] hover:text-white"
+                  ? "bg-white text-gray-900 shadow-sm"
+                  : "text-gray-500 hover:text-gray-700"
               }`}
             >
               Yearly
-              <span className="text-xs bg-white/20 px-2 py-0.5 rounded-full">
-                Save 20%
+              <span className="text-xs bg-[#00d4aa] text-white px-2 py-0.5 rounded-full">
+                -20%
               </span>
             </button>
           </div>
         </motion.div>
 
         {/* Pricing Cards */}
-        <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
-          {plans.map((plan, index) => (
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {stakeholderPlans.map((plan, index) => (
             <motion.div
-              key={plan.name}
+              key={plan.id}
               initial={{ opacity: 0, y: 20 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.5, delay: index * 0.1 }}
-              className={`relative rounded-2xl p-6 ${
-                plan.popular
-                  ? "bg-gradient-to-b from-[var(--vayo-accent)]/10 to-[var(--vayo-dark)] border-2 border-[var(--vayo-accent)]/50"
-                  : "bg-[var(--vayo-gray-900)] border border-[var(--vayo-gray-800)]"
-              }`}
+              className="bg-white p-6 rounded-2xl border border-gray-200 hover:border-gray-300 hover:shadow-lg transition-all group"
             >
-              {plan.popular && (
-                <div className="absolute -top-3 left-1/2 -translate-x-1/2">
-                  <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-gradient-accent text-white text-xs font-semibold">
-                    <Sparkles className="w-3 h-3" />
-                    Most Popular
-                  </span>
-                </div>
-              )}
-
-              <div className="mb-6">
-                <h3 className="text-xl font-bold text-white mb-2">{plan.name}</h3>
-                <p className="text-sm text-[var(--vayo-gray-400)]">
-                  {plan.description}
-                </p>
+              {/* Icon */}
+              <div className={`w-14 h-14 ${plan.color} rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform`}>
+                <plan.icon className="w-7 h-7 text-white" />
               </div>
 
-              <div className="mb-6">
-                {plan.monthlyPrice ? (
-                  <>
-                    <span className="text-4xl font-bold text-white">
-                      €{isYearly ? plan.yearlyPrice : plan.monthlyPrice}
-                    </span>
-                    <span className="text-[var(--vayo-gray-400)]">/month</span>
-                    {isYearly && (
-                      <p className="text-xs text-[var(--vayo-gray-500)] mt-1">
-                        Billed annually
-                      </p>
-                    )}
-                  </>
-                ) : (
-                  <span className="text-3xl font-bold text-white">Custom</span>
+              <h3 className="text-xl font-bold text-gray-900 mb-2">{plan.name}</h3>
+              <p className="text-sm text-gray-500 mb-4 min-h-[40px]">{plan.description}</p>
+
+              {/* Price */}
+              <div className="mb-4">
+                <span className="text-3xl font-bold text-gray-900">
+                  €{isYearly ? plan.yearlyPrice : plan.monthlyPrice}
+                </span>
+                <span className="text-gray-500">/mo</span>
+                {isYearly && (
+                  <p className="text-xs text-gray-400 mt-1">Billed annually</p>
                 )}
               </div>
 
-              <ul className="space-y-3 mb-8">
+              {/* Highlight */}
+              <div className="mb-4 px-3 py-2 rounded-lg bg-gray-50 border border-gray-100">
+                <p className="text-xs font-medium text-[#00d4aa]">✨ {plan.highlight}</p>
+              </div>
+
+              {/* Features */}
+              <ul className="space-y-2 mb-6">
                 {plan.features.map((feature) => (
-                  <li
-                    key={feature}
-                    className="flex items-start gap-3 text-sm text-[var(--vayo-gray-300)]"
-                  >
-                    <Check className="w-4 h-4 text-[var(--vayo-accent)] flex-shrink-0 mt-0.5" />
+                  <li key={feature} className="flex items-start gap-2 text-sm text-gray-600">
+                    <Check className="w-4 h-4 text-[#00d4aa] flex-shrink-0 mt-0.5" />
                     {feature}
                   </li>
                 ))}
               </ul>
 
-              <button
-                className={`w-full py-3 rounded-full font-semibold text-sm transition-all ${
-                  plan.popular
-                    ? "btn-primary"
-                    : "btn-secondary"
-                }`}
-              >
-                {plan.cta}
+              {/* CTA */}
+              <button className="w-full py-3 rounded-full font-semibold text-sm border border-gray-200 text-gray-700 hover:bg-gray-50 transition-all flex items-center justify-center gap-2">
+                Get started
+                <ArrowRight className="w-4 h-4" />
               </button>
             </motion.div>
           ))}
         </div>
 
-        {/* Bottom Note */}
-        <motion.p
-          initial={{ opacity: 0 }}
-          animate={isInView ? { opacity: 1 } : {}}
+        {/* Integration Note */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6, delay: 0.5 }}
-          className="text-center text-sm text-[var(--vayo-gray-500)] mt-8"
+          className="mt-12 text-center"
         >
-          All prices in EUR. VAT may apply. Cancel anytime.
-        </motion.p>
+          <div className="inline-flex items-center gap-3 px-6 py-3 rounded-full bg-gray-50 border border-gray-200">
+            <div className="flex -space-x-2">
+              {stakeholderPlans.map((plan) => (
+                <div key={plan.id} className={`w-8 h-8 ${plan.color} rounded-full flex items-center justify-center border-2 border-white`}>
+                  <plan.icon className="w-4 h-4 text-white" />
+                </div>
+              ))}
+            </div>
+            <p className="text-sm text-gray-600">
+              All modules <span className="text-[#00d4aa] font-medium">work together</span> — one ecosystem
+            </p>
+          </div>
+        </motion.div>
+
+        <p className="text-center text-sm text-gray-400 mt-8">
+          All prices in EUR. VAT may apply. 14-day free trial. Cancel anytime.
+        </p>
       </div>
     </section>
   );

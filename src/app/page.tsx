@@ -2,7 +2,6 @@ import Header from "@/components/Header";
 import Hero from "@/components/Hero";
 import Ecosystem from "@/components/Ecosystem";
 import Stats from "@/components/Stats";
-import Features from "@/components/Features";
 import MobileApp from "@/components/MobileApp";
 import Comparison from "@/components/Comparison";
 import Testimonials from "@/components/Testimonials";
@@ -18,7 +17,6 @@ export default function Home() {
         <Hero />
         <Ecosystem />
         <Stats />
-        <Features />
         <MobileApp />
         <Comparison />
         <Testimonials />

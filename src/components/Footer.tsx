@@ -1,99 +1,64 @@
-"use client";
-
-import { motion } from "framer-motion";
-import { 
-  Twitter, 
-  Linkedin, 
-  Instagram, 
-  Youtube,
-  Mail,
-  MapPin
-} from "lucide-react";
+import Link from "next/link";
 
 const footerLinks = {
   Product: [
     { label: "Features", href: "/features" },
     { label: "Pricing", href: "/pricing" },
     { label: "Integrations", href: "/integrations" },
+    { label: "API", href: "/api-reference" },
     { label: "Changelog", href: "/changelog" },
-    { label: "Roadmap", href: "/roadmap" },
   ],
   Solutions: [
-    { label: "For DJ Agencies", href: "/solutions/dj-agencies" },
-    { label: "For Touring Bands", href: "/solutions/touring-bands" },
-    { label: "For Performing Arts", href: "/solutions/performing-arts" },
-    { label: "Enterprise", href: "/solutions/enterprise" },
-  ],
-  Resources: [
-    { label: "Documentation", href: "/docs" },
-    { label: "Blog", href: "/blog" },
-    { label: "Case Studies", href: "/case-studies" },
-    { label: "Support Center", href: "/support" },
-    { label: "API Reference", href: "/api-reference" },
+    { label: "For Agencies", href: "/solutions/dj-agencies" },
+    { label: "For Festivals", href: "/solutions/touring-bands" },
+    { label: "For Artists", href: "/solutions/performing-arts" },
+    { label: "For Labels", href: "/solutions/enterprise" },
   ],
   Company: [
-    { label: "About Us", href: "/about" },
+    { label: "About", href: "/about" },
+    { label: "Blog", href: "/blog" },
     { label: "Careers", href: "/careers" },
+    { label: "Press", href: "/press" },
     { label: "Contact", href: "/contact" },
-    { label: "Press Kit", href: "/press" },
+  ],
+  Legal: [
+    { label: "Privacy", href: "/privacy" },
+    { label: "Terms", href: "/terms" },
+    { label: "Cookies", href: "/cookies" },
   ],
 };
 
-const socialLinks = [
-  { icon: Twitter, href: "#", label: "Twitter" },
-  { icon: Linkedin, href: "#", label: "LinkedIn" },
-  { icon: Instagram, href: "#", label: "Instagram" },
-  { icon: Youtube, href: "#", label: "YouTube" },
-];
-
 export default function Footer() {
   return (
-    <footer className="border-t border-[var(--vayo-gray-800)] bg-[var(--vayo-black)]">
-      <div className="container mx-auto px-6 py-16">
-        {/* Main Footer Content */}
-        <div className="grid grid-cols-2 md:grid-cols-6 gap-8 mb-12">
-          {/* Brand Column */}
-          <div className="col-span-2">
-            <motion.a
-              href="/"
-              className="flex items-center gap-2 mb-4"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.5 }}
-            >
-              <div className="w-10 h-10 bg-gradient-accent rounded-xl flex items-center justify-center">
+    <footer className="bg-gray-900 text-white py-16">
+      <div className="container mx-auto px-6">
+        <div className="grid grid-cols-2 md:grid-cols-5 gap-8 mb-12">
+          {/* Logo */}
+          <div className="col-span-2 md:col-span-1">
+            <Link href="/" className="flex items-center gap-2 mb-4">
+              <div className="w-10 h-10 bg-[#00d4aa] rounded-xl flex items-center justify-center">
                 <span className="text-white font-bold text-lg" style={{ fontFamily: "var(--font-syne)" }}>V</span>
               </div>
-              <span className="text-xl font-bold text-white" style={{ fontFamily: "var(--font-syne)" }}>VAYO</span>
-            </motion.a>
-            <p className="text-[var(--vayo-gray-400)] text-sm mb-6 max-w-xs">
-              The all-in-one platform for artist booking agencies. 
-              Streamline your entire process—from request to show.
+              <span className="text-xl font-bold" style={{ fontFamily: "var(--font-syne)" }}>VAYO</span>
+            </Link>
+            <p className="text-gray-400 text-sm">
+              The platform that connects everyone in live entertainment.
             </p>
-            
-            {/* Contact Info */}
-            <div className="space-y-2">
-              <a href="mailto:hello@vayo.io" className="flex items-center gap-2 text-sm text-[var(--vayo-gray-400)] hover:text-[var(--vayo-accent)] transition-colors">
-                <Mail className="w-4 h-4" />
-                hello@vayo.io
-              </a>
-              <div className="flex items-center gap-2 text-sm text-[var(--vayo-gray-400)]">
-                <MapPin className="w-4 h-4" />
-                Amsterdam, Netherlands
-              </div>
-            </div>
           </div>
 
-          {/* Link Columns */}
+          {/* Links */}
           {Object.entries(footerLinks).map(([category, links]) => (
             <div key={category}>
-              <h4 className="text-white font-semibold mb-4 text-sm">{category}</h4>
-              <ul className="space-y-3">
+              <h4 className="font-semibold text-white mb-4">{category}</h4>
+              <ul className="space-y-2">
                 {links.map((link) => (
                   <li key={link.label}>
-                    <a href={link.href} className="footer-link">
+                    <Link
+                      href={link.href}
+                      className="text-gray-400 hover:text-white text-sm transition-colors"
+                    >
                       {link.label}
-                    </a>
+                    </Link>
                   </li>
                 ))}
               </ul>
@@ -101,36 +66,21 @@ export default function Footer() {
           ))}
         </div>
 
-        {/* Divider */}
-        <div className="divider mb-8" />
-
-        {/* Bottom Bar */}
-        <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-          <div className="flex flex-wrap items-center gap-4 text-sm text-[var(--vayo-gray-500)]">
-            <span>© 2026 VAYO. All rights reserved.</span>
-            <a href="/privacy" className="hover:text-[var(--vayo-gray-300)] transition-colors">
-              Privacy Policy
+        {/* Bottom */}
+        <div className="pt-8 border-t border-gray-800 flex flex-col md:flex-row items-center justify-between gap-4">
+          <p className="text-gray-400 text-sm">
+            © {new Date().getFullYear()} VAYO. All rights reserved.
+          </p>
+          <div className="flex items-center gap-6">
+            <a href="https://twitter.com" className="text-gray-400 hover:text-white transition-colors">
+              Twitter
             </a>
-            <a href="/terms" className="hover:text-[var(--vayo-gray-300)] transition-colors">
-              Terms of Service
+            <a href="https://linkedin.com" className="text-gray-400 hover:text-white transition-colors">
+              LinkedIn
             </a>
-            <a href="/cookies" className="hover:text-[var(--vayo-gray-300)] transition-colors">
-              Cookie Policy
+            <a href="https://instagram.com" className="text-gray-400 hover:text-white transition-colors">
+              Instagram
             </a>
-          </div>
-
-          {/* Social Links */}
-          <div className="flex items-center gap-4">
-            {socialLinks.map((social) => (
-              <a
-                key={social.label}
-                href={social.href}
-                aria-label={social.label}
-                className="w-9 h-9 rounded-full bg-[var(--vayo-gray-900)] flex items-center justify-center text-[var(--vayo-gray-400)] hover:bg-[var(--vayo-accent)] hover:text-white transition-all"
-              >
-                <social.icon className="w-4 h-4" />
-              </a>
-            ))}
           </div>
         </div>
       </div>
