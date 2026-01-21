@@ -1,7 +1,6 @@
 "use client";
 
 import DashboardLayout from "@/components/dashboard/DashboardLayout";
-import { motion } from "framer-motion";
 import {
   LayoutDashboard,
   Users,
@@ -11,12 +10,13 @@ import {
   TrendingUp,
   MessageSquare,
   Settings,
-  Music,
   ArrowUpRight,
   ArrowDownRight,
   Play,
+  ArrowRight,
   Eye,
 } from "lucide-react";
+import Link from "next/link";
 
 const navItems = [
   { label: "Dashboard", href: "/demo/label", icon: LayoutDashboard },
@@ -25,15 +25,15 @@ const navItems = [
   { label: "Bookings", href: "/demo/label/bookings", icon: Calendar },
   { label: "Revenue", href: "/demo/label/revenue", icon: DollarSign },
   { label: "A&R Pipeline", href: "/demo/label/pipeline", icon: TrendingUp },
-  { label: "Messages", href: "/demo/label/messages", icon: MessageSquare },
+  { label: "Messages", href: "/demo/label/messages", icon: MessageSquare, badge: 4 },
   { label: "Settings", href: "/demo/label/settings", icon: Settings },
 ];
 
 const stats = [
-  { label: "Total Artists", value: "48", change: "+4", trend: "up", icon: Users },
-  { label: "Active Releases", value: "156", change: "+12", trend: "up", icon: Disc3 },
-  { label: "Booking Revenue", value: "€1.2M", change: "+18%", trend: "up", icon: DollarSign },
-  { label: "Streams (MTD)", value: "45M", change: "+23%", trend: "up", icon: Play },
+  { label: "Total Artists", value: "48", change: "+4", trend: "up", icon: Users, color: "text-[#3b82f6]" },
+  { label: "Active Releases", value: "156", change: "+12", trend: "up", icon: Disc3, color: "text-[#a855f7]" },
+  { label: "Booking Revenue", value: "€1.2M", change: "+18%", trend: "up", icon: DollarSign, color: "text-[#00d4aa]" },
+  { label: "Streams (MTD)", value: "45M", change: "+23%", trend: "up", icon: Play, color: "text-[#f97316]" },
 ];
 
 const topArtists = [
@@ -44,9 +44,9 @@ const topArtists = [
 ];
 
 const upcomingReleases = [
-  { artist: "DJ Storm", title: "Midnight Sessions EP", date: "Feb 1, 2026", type: "EP", status: "mastering" },
-  { artist: "Aurora Beats", title: "Echoes", date: "Feb 15, 2026", type: "Single", status: "ready" },
-  { artist: "The Waves", title: "Ocean Drive", date: "Mar 1, 2026", type: "Album", status: "mixing" },
+  { artist: "DJ Storm", title: "Midnight Sessions EP", date: "Feb 1", type: "EP", status: "mastering" },
+  { artist: "Aurora Beats", title: "Echoes", date: "Feb 15", type: "Single", status: "ready" },
+  { artist: "The Waves", title: "Ocean Drive", date: "Mar 1", type: "Album", status: "mixing" },
 ];
 
 export default function LabelDashboard() {
@@ -60,75 +60,89 @@ export default function LabelDashboard() {
       {/* Page Header */}
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-8">
         <div>
-          <h1 className="text-2xl font-bold text-white" style={{ fontFamily: "var(--font-syne)" }}>
-            Welcome back, Thomas
+          <h1 className="text-3xl font-bold text-gray-900" style={{ fontFamily: "var(--font-syne)" }}>
+            Label Dashboard
           </h1>
-          <p className="text-[var(--vayo-gray-400)]">
-            Here&apos;s an overview of your label&apos;s performance.
+          <p className="text-gray-500 font-medium">
+            Oversee your roster's global touring and revenue performance.
           </p>
+        </div>
+        <div className="flex gap-3">
+          <button className="px-4 py-2 bg-white border border-gray-200 rounded-xl text-sm font-bold text-gray-700 hover:bg-gray-50 transition-all flex items-center gap-2">
+            <TrendingUp className="w-4 h-4 text-[#3b82f6]" />
+            A&R Pipeline
+          </button>
+          <button className="px-4 py-2 bg-[#3b82f6] rounded-xl text-sm font-bold text-white hover:bg-[#2563eb] transition-all flex items-center gap-2 shadow-md shadow-[#3b82f6]/20">
+            <Disc3 className="w-4 h-4" />
+            New Release
+          </button>
         </div>
       </div>
 
-      {/* Stats */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-        {stats.map((stat, index) => (
-          <motion.div
+      {/* Stats Grid */}
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+        {stats.map((stat) => (
+          <div
             key={stat.label}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: index * 0.1 }}
-            className="bg-[var(--vayo-gray-900)] border border-[var(--vayo-gray-800)] rounded-xl p-5"
+            className="bg-white border border-gray-100 rounded-2xl p-6 shadow-sm hover:shadow-md transition-all group"
           >
-            <div className="flex items-center justify-between mb-3">
-              <div className="w-10 h-10 rounded-lg bg-cyan-500/20 flex items-center justify-center">
-                <stat.icon className="w-5 h-5 text-cyan-500" />
+            <div className="flex items-center justify-between mb-4">
+              <div className="w-12 h-12 rounded-xl bg-gray-50 flex items-center justify-center group-hover:scale-110 transition-transform">
+                <stat.icon className={`w-6 h-6 ${stat.color}`} />
               </div>
-              <div className={`flex items-center gap-1 text-sm ${
+              <div className={`flex items-center gap-1 text-xs font-bold ${
                 stat.trend === "up" ? "text-emerald-500" : "text-red-500"
               }`}>
-                {stat.trend === "up" ? <ArrowUpRight className="w-4 h-4" /> : <ArrowDownRight className="w-4 h-4" />}
+                {stat.trend === "up" ? (
+                  <ArrowUpRight className="w-4 h-4" />
+                ) : (
+                  <ArrowDownRight className="w-4 h-4" />
+                )}
                 {stat.change}
               </div>
             </div>
-            <p className="text-2xl font-bold text-white mb-1">{stat.value}</p>
-            <p className="text-sm text-[var(--vayo-gray-500)]">{stat.label}</p>
-          </motion.div>
+            <p className="text-3xl font-bold text-gray-900 mb-1">{stat.value}</p>
+            <p className="text-xs font-bold text-gray-400 uppercase tracking-wider">{stat.label}</p>
+          </div>
         ))}
       </div>
 
-      <div className="grid lg:grid-cols-3 gap-6">
-        {/* Top Artists */}
-        <div className="lg:col-span-2 bg-[var(--vayo-gray-900)] border border-[var(--vayo-gray-800)] rounded-xl overflow-hidden">
-          <div className="flex items-center justify-between p-5 border-b border-[var(--vayo-gray-800)]">
-            <h2 className="text-lg font-semibold text-white">Top Artists</h2>
-            <a href="/demo/label/roster" className="text-sm text-cyan-400 hover:underline">View All</a>
+      {/* Main Content Grid */}
+      <div className="grid lg:grid-cols-3 gap-8">
+        {/* Top Artists Table */}
+        <div className="lg:col-span-2 bg-white border border-gray-100 rounded-3xl shadow-sm overflow-hidden">
+          <div className="flex items-center justify-between p-6 border-b border-gray-50">
+            <h2 className="text-xl font-bold text-gray-900" style={{ fontFamily: "var(--font-syne)" }}>Top Performing Artists</h2>
+            <button className="text-sm font-bold text-[#3b82f6] hover:underline flex items-center gap-1">
+              Full Roster <ArrowRight className="w-4 h-4" />
+            </button>
           </div>
           <div className="overflow-x-auto">
             <table className="w-full">
               <thead>
-                <tr className="border-b border-[var(--vayo-gray-800)]">
-                  <th className="text-left p-4 text-sm font-medium text-[var(--vayo-gray-400)]">Artist</th>
-                  <th className="text-right p-4 text-sm font-medium text-[var(--vayo-gray-400)]">Streams</th>
-                  <th className="text-right p-4 text-sm font-medium text-[var(--vayo-gray-400)]">Bookings</th>
-                  <th className="text-right p-4 text-sm font-medium text-[var(--vayo-gray-400)]">Revenue</th>
-                  <th className="text-right p-4 text-sm font-medium text-[var(--vayo-gray-400)]">Trend</th>
+                <tr className="bg-gray-50/50">
+                  <th className="text-left p-6 text-[10px] font-bold uppercase tracking-widest text-gray-400">Artist</th>
+                  <th className="text-right p-6 text-[10px] font-bold uppercase tracking-widest text-gray-400">Streams</th>
+                  <th className="text-right p-6 text-[10px] font-bold uppercase tracking-widest text-gray-400">Revenue</th>
+                  <th className="text-right p-6 text-[10px] font-bold uppercase tracking-widest text-gray-400">Trend</th>
                 </tr>
               </thead>
-              <tbody>
+              <tbody className="divide-y divide-gray-50">
                 {topArtists.map((artist, idx) => (
-                  <tr key={idx} className="border-b border-[var(--vayo-gray-800)] hover:bg-[var(--vayo-gray-800)]/50">
-                    <td className="p-4">
-                      <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-cyan-500 to-blue-500 flex items-center justify-center text-white font-semibold">
+                  <tr key={idx} className="hover:bg-gray-50/50 transition-colors group">
+                    <td className="p-6">
+                      <div className="flex items-center gap-4">
+                        <div className="w-10 h-10 rounded-xl bg-[#3b82f6]/10 flex items-center justify-center text-[#3b82f6] font-bold">
                           {artist.name.charAt(0)}
                         </div>
-                        <span className="text-white font-medium">{artist.name}</span>
+                        <span className="text-gray-900 font-bold">{artist.name}</span>
                       </div>
                     </td>
-                    <td className="p-4 text-right text-[var(--vayo-gray-300)]">{artist.streams}</td>
-                    <td className="p-4 text-right text-[var(--vayo-gray-300)]">{artist.bookings}</td>
-                    <td className="p-4 text-right text-cyan-400 font-medium">{artist.revenue}</td>
-                    <td className="p-4 text-right text-emerald-500">{artist.trend}</td>
+                    <td className="p-6 text-right font-medium text-gray-600">{artist.streams}</td>
+                    <td className="p-6 text-right font-bold text-gray-900">{artist.revenue}</td>
+                    <td className="p-6 text-right">
+                      <span className="text-emerald-500 font-bold">{artist.trend}</span>
+                    </td>
                   </tr>
                 ))}
               </tbody>
@@ -136,31 +150,49 @@ export default function LabelDashboard() {
           </div>
         </div>
 
-        {/* Upcoming Releases */}
-        <div className="bg-[var(--vayo-gray-900)] border border-[var(--vayo-gray-800)] rounded-xl overflow-hidden">
-          <div className="flex items-center justify-between p-5 border-b border-[var(--vayo-gray-800)]">
-            <h2 className="text-lg font-semibold text-white">Upcoming Releases</h2>
+        {/* Right Column */}
+        <div className="space-y-8">
+          {/* Upcoming Releases */}
+          <div className="bg-white border border-gray-100 rounded-3xl shadow-sm p-6">
+            <h2 className="text-xl font-bold text-gray-900 mb-6" style={{ fontFamily: "var(--font-syne)" }}>Upcoming Releases</h2>
+            <div className="space-y-4">
+              {upcomingReleases.map((release, index) => (
+                <div key={index} className="p-4 bg-gray-50 rounded-2xl border border-gray-100 group hover:border-[#a855f7]/30 transition-all">
+                  <div className="flex items-center justify-between mb-2">
+                    <p className="text-sm font-bold text-gray-900">{release.title}</p>
+                    <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-tighter ${
+                      release.status === 'ready' ? 'bg-emerald-100 text-emerald-600' :
+                      'bg-blue-100 text-blue-600'
+                    }`}>
+                      {release.status}
+                    </span>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <p className="text-xs text-gray-500 font-bold uppercase tracking-tighter">{release.artist}</p>
+                    <p className="text-xs text-gray-400 font-bold">{release.date}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <button className="w-full mt-6 py-3 border border-gray-200 rounded-2xl text-sm font-bold text-gray-600 hover:bg-gray-50 transition-all">
+              Manage All Releases
+            </button>
           </div>
-          <div className="p-4 space-y-4">
-            {upcomingReleases.map((release, idx) => (
-              <div key={idx} className="p-4 rounded-xl bg-[var(--vayo-gray-800)]/50 hover:bg-[var(--vayo-gray-800)] transition-colors">
-                <div className="flex items-center justify-between mb-2">
-                  <span className="text-white font-medium">{release.title}</span>
-                  <span className={`px-2 py-0.5 rounded-full text-xs ${
-                    release.status === "ready" ? "bg-emerald-500/20 text-emerald-500" :
-                    release.status === "mastering" ? "bg-yellow-500/20 text-yellow-500" :
-                    "bg-blue-500/20 text-blue-500"
-                  }`}>
-                    {release.status}
-                  </span>
-                </div>
-                <p className="text-sm text-[var(--vayo-gray-400)]">{release.artist}</p>
-                <div className="flex items-center justify-between mt-2">
-                  <span className="text-xs text-[var(--vayo-gray-500)]">{release.type}</span>
-                  <span className="text-xs text-[var(--vayo-gray-500)]">{release.date}</span>
-                </div>
+
+          {/* Ecosystem Sync */}
+          <div className="bg-[#00d4aa] rounded-3xl p-6 text-white shadow-lg shadow-[#00d4aa]/20">
+            <div className="flex items-center gap-2 mb-4">
+              <div className="w-8 h-8 rounded-lg bg-white/20 flex items-center justify-center">
+                <Users className="w-4 h-4 text-white" />
               </div>
-            ))}
+              <h3 className="text-lg font-bold" style={{ fontFamily: "var(--font-syne)" }}>Agency Sync</h3>
+            </div>
+            <p className="text-white/80 text-sm font-medium mb-6 leading-relaxed">
+              Real-time booking data is now available for your top 5 artists. Commission reports are updated.
+            </p>
+            <button className="w-full py-3 bg-white text-[#00d4aa] rounded-2xl text-sm font-bold hover:bg-gray-50 transition-all flex items-center justify-center gap-2">
+              View Reports <ArrowRight className="w-4 h-4" />
+            </button>
           </div>
         </div>
       </div>

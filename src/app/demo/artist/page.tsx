@@ -1,7 +1,6 @@
 "use client";
 
 import DashboardLayout from "@/components/dashboard/DashboardLayout";
-import { motion } from "framer-motion";
 import {
   LayoutDashboard,
   Calendar,
@@ -15,17 +14,20 @@ import {
   Clock,
   Download,
   ExternalLink,
-  CheckCircle,
-  AlertCircle,
+  CheckCircle2,
+  ChevronRight,
+  Globe,
 } from "lucide-react";
+import Link from "next/link";
 
 const navItems = [
   { label: "Dashboard", href: "/demo/artist", icon: LayoutDashboard },
   { label: "Schedule", href: "/demo/artist/schedule", icon: Calendar },
+  { label: "Availability", href: "/demo/artist/availability", icon: Globe },
   { label: "Documents", href: "/demo/artist/documents", icon: FileText },
   { label: "Earnings", href: "/demo/artist/earnings", icon: DollarSign },
   { label: "Travel", href: "/demo/artist/travel", icon: Plane },
-  { label: "Messages", href: "/demo/artist/messages", icon: MessageSquare },
+  { label: "Messages", href: "/demo/artist/messages", icon: MessageSquare, badge: 2 },
   { label: "Settings", href: "/demo/artist/settings", icon: Settings },
 ];
 
@@ -35,51 +37,35 @@ const upcomingShows = [
     venue: "Paradiso",
     city: "Amsterdam",
     country: "NL",
-    date: "2026-01-24",
+    date: "Jan 24, 2026",
     time: "23:00",
-    fee: 4500,
     status: "confirmed",
-    hasDocuments: true,
-    hasTravelBooked: true,
   },
   {
     id: 2,
     venue: "Berghain",
     city: "Berlin",
     country: "DE",
-    date: "2026-02-02",
+    date: "Feb 2, 2026",
     time: "23:00",
-    fee: 6000,
     status: "confirmed",
-    hasDocuments: true,
-    hasTravelBooked: false,
   },
   {
     id: 3,
     venue: "Warehouse Project",
     city: "Manchester",
     country: "UK",
-    date: "2026-02-14",
+    date: "Feb 14, 2026",
     time: "22:00",
-    fee: 5500,
     status: "pending",
-    hasDocuments: false,
-    hasTravelBooked: false,
   },
 ];
 
-const recentDocuments = [
-  { name: "Contract - Paradiso Amsterdam", type: "contract", date: "Jan 12, 2026" },
-  { name: "Rider - Technical Requirements", type: "rider", date: "Jan 10, 2026" },
-  { name: "Invoice #INV-2026-001", type: "invoice", date: "Jan 8, 2026" },
-  { name: "Flight Ticket - AMS to TXL", type: "travel", date: "Jan 5, 2026" },
-];
-
 const stats = [
-  { label: "Upcoming Shows", value: "12", icon: Calendar },
-  { label: "This Month", value: "€18,500", icon: DollarSign },
-  { label: "Documents Pending", value: "3", icon: FileText },
-  { label: "Messages", value: "5", icon: MessageSquare },
+  { label: "Upcoming Shows", value: "12", icon: Calendar, color: "text-[#f97316]" },
+  { label: "This Month", value: "€18,500", icon: DollarSign, color: "text-[#00d4aa]" },
+  { label: "Unsigned Docs", value: "3", icon: FileText, color: "text-red-500" },
+  { label: "Unread Messages", value: "2", icon: MessageSquare, color: "text-[#3b82f6]" },
 ];
 
 export default function ArtistDashboard() {
@@ -93,163 +79,166 @@ export default function ArtistDashboard() {
       {/* Page Header */}
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-8">
         <div>
-          <h1 className="text-2xl font-bold text-white" style={{ fontFamily: "var(--font-syne)" }}>
-            Welcome back, Storm
+          <h1 className="text-3xl font-bold text-gray-900" style={{ fontFamily: "var(--font-syne)" }}>
+            Artist Dashboard
           </h1>
-          <p className="text-[var(--vayo-gray-400)]">
-            Here&apos;s your schedule and upcoming shows.
+          <p className="text-gray-500 font-medium">
+            Your schedule, travel, and documents in one place.
           </p>
         </div>
         <div className="flex gap-3">
-          <button className="btn-secondary text-sm py-2.5">
+          <button className="px-4 py-2 bg-white border border-gray-200 rounded-xl text-sm font-bold text-gray-700 hover:bg-gray-50 transition-all flex items-center gap-2">
             <Calendar className="w-4 h-4" />
             Update Availability
           </button>
         </div>
       </div>
 
-      {/* Stats */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-        {stats.map((stat, index) => (
-          <motion.div
+      {/* Stats Grid */}
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+        {stats.map((stat) => (
+          <div
             key={stat.label}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: index * 0.1 }}
-            className="bg-[var(--vayo-gray-900)] border border-[var(--vayo-gray-800)] rounded-xl p-5"
+            className="bg-white border border-gray-100 rounded-2xl p-6 shadow-sm hover:shadow-md transition-all group"
           >
-            <div className="flex items-center justify-between mb-3">
-              <div className="w-10 h-10 rounded-lg bg-purple-500/20 flex items-center justify-center">
-                <stat.icon className="w-5 h-5 text-purple-500" />
+            <div className="flex items-center justify-between mb-4">
+              <div className="w-12 h-12 rounded-xl bg-gray-50 flex items-center justify-center group-hover:scale-110 transition-transform">
+                <stat.icon className={`w-6 h-6 ${stat.color}`} />
               </div>
             </div>
-            <p className="text-2xl font-bold text-white mb-1">{stat.value}</p>
-            <p className="text-sm text-[var(--vayo-gray-500)]">{stat.label}</p>
-          </motion.div>
+            <p className="text-3xl font-bold text-gray-900 mb-1">{stat.value}</p>
+            <p className="text-xs font-bold text-gray-400 uppercase tracking-wider">{stat.label}</p>
+          </div>
         ))}
       </div>
 
-      {/* Next Show Card */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="bg-gradient-to-br from-purple-500/20 to-pink-500/20 border border-purple-500/30 rounded-2xl p-6 mb-8"
-      >
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-          <div>
-            <p className="text-purple-400 text-sm font-medium mb-2">NEXT SHOW</p>
-            <h2 className="text-2xl font-bold text-white mb-2">Paradiso Amsterdam</h2>
-            <div className="flex flex-wrap items-center gap-4 text-[var(--vayo-gray-300)]">
-              <span className="flex items-center gap-2">
-                <Calendar className="w-4 h-4" />
+      {/* Next Show Highlight */}
+      <div className="bg-white border border-gray-100 rounded-3xl shadow-sm p-8 mb-8 relative overflow-hidden group">
+        <div className="absolute top-0 right-0 p-8">
+          <div className="w-24 h-24 bg-[#f97316]/5 rounded-full flex items-center justify-center -mr-12 -mt-12 group-hover:scale-150 transition-transform duration-700">
+            <Music className="w-8 h-8 text-[#f97316] opacity-20" />
+          </div>
+        </div>
+        
+        <div className="relative z-10 flex flex-col lg:flex-row lg:items-center justify-between gap-8">
+          <div className="space-y-4">
+            <div className="inline-flex items-center gap-2 px-3 py-1 bg-[#f97316]/10 text-[#f97316] rounded-lg text-[10px] font-bold uppercase tracking-widest">
+              Next Show
+            </div>
+            <h2 className="text-4xl font-bold text-gray-900" style={{ fontFamily: "var(--font-syne)" }}>Paradiso Amsterdam</h2>
+            <div className="flex flex-wrap items-center gap-6">
+              <div className="flex items-center gap-2 text-gray-500 font-bold">
+                <Calendar className="w-5 h-5 text-[#f97316]" />
                 Jan 24, 2026
-              </span>
-              <span className="flex items-center gap-2">
-                <Clock className="w-4 h-4" />
+              </div>
+              <div className="flex items-center gap-2 text-gray-500 font-bold">
+                <Clock className="w-5 h-5 text-[#f97316]" />
                 23:00
-              </span>
-              <span className="flex items-center gap-2">
-                <MapPin className="w-4 h-4" />
+              </div>
+              <div className="flex items-center gap-2 text-gray-500 font-bold">
+                <MapPin className="w-5 h-5 text-[#f97316]" />
                 Amsterdam, NL
-              </span>
+              </div>
             </div>
           </div>
-          <div className="flex flex-col sm:flex-row gap-3">
-            <button className="btn-secondary text-sm py-2">
-              <FileText className="w-4 h-4" />
-              View Documents
-            </button>
-            <button className="btn-primary text-sm py-2 bg-purple-500 hover:bg-purple-600">
+          
+          <div className="flex flex-col sm:flex-row gap-4">
+            <button className="px-6 py-3 bg-gray-900 text-white rounded-2xl font-bold text-sm hover:bg-gray-800 transition-all flex items-center justify-center gap-2 shadow-lg shadow-gray-900/20">
               <ExternalLink className="w-4 h-4" />
-              View Details
+              View Advancing
+            </button>
+            <button className="px-6 py-3 bg-white border border-gray-200 text-gray-700 rounded-2xl font-bold text-sm hover:bg-gray-50 transition-all flex items-center justify-center gap-2">
+              <FileText className="w-4 h-4" />
+              Contract
             </button>
           </div>
         </div>
-        <div className="mt-4 pt-4 border-t border-white/10">
-          <div className="flex flex-wrap gap-4">
-            <span className="flex items-center gap-2 text-sm">
-              <CheckCircle className="w-4 h-4 text-emerald-500" />
-              <span className="text-[var(--vayo-gray-300)]">Contract Signed</span>
-            </span>
-            <span className="flex items-center gap-2 text-sm">
-              <CheckCircle className="w-4 h-4 text-emerald-500" />
-              <span className="text-[var(--vayo-gray-300)]">Travel Booked</span>
-            </span>
-            <span className="flex items-center gap-2 text-sm">
-              <CheckCircle className="w-4 h-4 text-emerald-500" />
-              <span className="text-[var(--vayo-gray-300)]">Rider Approved</span>
-            </span>
+
+        <div className="mt-8 pt-8 border-t border-gray-50 flex flex-wrap gap-8">
+          <div className="flex items-center gap-2 text-sm font-bold text-emerald-600">
+            <CheckCircle2 className="w-5 h-5" />
+            Travel Confirmed
+          </div>
+          <div className="flex items-center gap-2 text-sm font-bold text-emerald-600">
+            <CheckCircle2 className="w-5 h-5" />
+            Technical Rider Ready
+          </div>
+          <div className="flex items-center gap-2 text-sm font-bold text-orange-500">
+            <Clock className="w-5 h-5" />
+            Hospitality Advancing
           </div>
         </div>
-      </motion.div>
+      </div>
 
-      <div className="grid lg:grid-cols-3 gap-6">
-        {/* Upcoming Shows */}
-        <div className="lg:col-span-2 bg-[var(--vayo-gray-900)] border border-[var(--vayo-gray-800)] rounded-xl overflow-hidden">
-          <div className="flex items-center justify-between p-5 border-b border-[var(--vayo-gray-800)]">
-            <h2 className="text-lg font-semibold text-white">Upcoming Shows</h2>
-            <a href="/demo/artist/schedule" className="text-sm text-purple-400 hover:underline">
-              View All
-            </a>
+      <div className="grid lg:grid-cols-3 gap-8">
+        {/* Tour Schedule */}
+        <div className="lg:col-span-2 bg-white border border-gray-100 rounded-3xl shadow-sm overflow-hidden">
+          <div className="flex items-center justify-between p-6 border-b border-gray-50">
+            <h2 className="text-xl font-bold text-gray-900" style={{ fontFamily: "var(--font-syne)" }}>Tour Schedule</h2>
+            <button className="text-sm font-bold text-[#f97316] hover:underline flex items-center gap-1">
+              Full Schedule <ArrowRight className="w-4 h-4" />
+            </button>
           </div>
-          <div className="divide-y divide-[var(--vayo-gray-800)]">
-            {upcomingShows.map((show) => (
-              <div key={show.id} className="flex items-center justify-between p-4 hover:bg-[var(--vayo-gray-800)]/50 transition-colors">
+          <div className="divide-y divide-gray-50">
+            {upcomingShows.map((show, index) => (
+              <div key={index} className="flex items-center justify-between p-6 hover:bg-gray-50/50 transition-colors group">
                 <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center text-white">
+                  <div className="w-12 h-12 rounded-2xl bg-gray-50 flex items-center justify-center text-gray-400 group-hover:bg-[#f97316]/10 group-hover:text-[#f97316] transition-all">
                     <Music className="w-6 h-6" />
                   </div>
                   <div>
-                    <p className="text-white font-medium">{show.venue}</p>
-                    <p className="text-sm text-[var(--vayo-gray-500)]">{show.city}, {show.country}</p>
+                    <p className="text-gray-900 font-bold">{show.venue}</p>
+                    <p className="text-sm text-gray-500 font-medium">{show.city}, {show.country}</p>
                   </div>
                 </div>
                 <div className="hidden md:block text-right">
-                  <p className="text-sm text-white">{new Date(show.date).toLocaleDateString("en-GB", { day: "numeric", month: "short" })}</p>
-                  <p className="text-sm text-[var(--vayo-gray-500)]">{show.time}</p>
+                  <p className="text-sm font-bold text-gray-900">{show.date}</p>
+                  <p className="text-sm text-gray-500 font-medium">{show.time}</p>
                 </div>
                 <div className="flex items-center gap-4">
-                  <span className={`px-3 py-1 rounded-full text-xs font-medium ${
-                    show.status === "confirmed"
-                      ? "bg-emerald-500/20 text-emerald-500"
-                      : "bg-yellow-500/20 text-yellow-500"
+                  <span className={`px-3 py-1 rounded-lg text-[10px] font-bold uppercase tracking-wider ${
+                    show.status === "confirmed" ? "bg-emerald-100 text-emerald-600" : "bg-orange-100 text-orange-600"
                   }`}>
-                    {show.status.charAt(0).toUpperCase() + show.status.slice(1)}
+                    {show.status}
                   </span>
-                  <span className="text-white font-semibold">€{show.fee.toLocaleString()}</span>
+                  <button className="p-2 hover:bg-gray-100 rounded-xl transition-colors">
+                    <ChevronRight className="w-5 h-5 text-gray-400" />
+                  </button>
                 </div>
               </div>
             ))}
           </div>
         </div>
 
-        {/* Recent Documents */}
-        <div className="bg-[var(--vayo-gray-900)] border border-[var(--vayo-gray-800)] rounded-xl overflow-hidden">
-          <div className="flex items-center justify-between p-5 border-b border-[var(--vayo-gray-800)]">
-            <h2 className="text-lg font-semibold text-white">Recent Documents</h2>
-          </div>
-          <div className="p-4 space-y-3">
-            {recentDocuments.map((doc, idx) => (
-              <div key={idx} className="flex items-center justify-between p-3 rounded-xl bg-[var(--vayo-gray-800)]/50 hover:bg-[var(--vayo-gray-800)] transition-colors cursor-pointer">
-                <div className="flex items-center gap-3">
-                  <div className={`w-10 h-10 rounded-lg flex items-center justify-center ${
-                    doc.type === "contract" ? "bg-blue-500/20 text-blue-500" :
-                    doc.type === "rider" ? "bg-purple-500/20 text-purple-500" :
-                    doc.type === "invoice" ? "bg-emerald-500/20 text-emerald-500" :
-                    "bg-orange-500/20 text-orange-500"
-                  }`}>
-                    <FileText className="w-5 h-5" />
-                  </div>
-                  <div>
-                    <p className="text-sm text-white font-medium">{doc.name}</p>
-                    <p className="text-xs text-[var(--vayo-gray-500)]">{doc.date}</p>
-                  </div>
+        {/* Agency Sync */}
+        <div className="space-y-8">
+          <div className="bg-white border border-gray-100 rounded-3xl shadow-sm p-6">
+            <h2 className="text-xl font-bold text-gray-900 mb-6" style={{ fontFamily: "var(--font-syne)" }}>Agency Sync</h2>
+            <div className="p-4 bg-gray-50 rounded-2xl border border-gray-100 mb-6">
+              <div className="flex items-center gap-3 mb-3">
+                <div className="w-10 h-10 rounded-full bg-[#00d4aa] flex items-center justify-center text-white font-bold">SB</div>
+                <div>
+                  <p className="text-sm font-bold text-gray-900">Sarah v.d. Berg</p>
+                  <p className="text-[10px] font-bold text-[#00d4aa] uppercase tracking-widest">Your Agent</p>
                 </div>
-                <button className="p-2 hover:bg-[var(--vayo-gray-700)] rounded-lg text-[var(--vayo-gray-400)]">
-                  <Download className="w-4 h-4" />
-                </button>
               </div>
-            ))}
+              <p className="text-xs text-gray-600 leading-relaxed font-medium">
+                "Hey Storm! I've just updated your Berlin travel info. Flights are booked, check the Travel tab."
+              </p>
+            </div>
+            <button className="w-full py-3 bg-gray-900 text-white rounded-2xl text-sm font-bold hover:bg-gray-800 transition-all flex items-center justify-center gap-2">
+              Reply <MessageSquare className="w-4 h-4" />
+            </button>
+          </div>
+
+          <div className="bg-[#3b82f6] rounded-3xl p-6 text-white shadow-lg shadow-blue-500/20">
+            <h3 className="text-lg font-bold mb-2" style={{ fontFamily: "var(--font-syne)" }}>Travel Update</h3>
+            <p className="text-white/80 text-sm font-medium mb-6">
+              Your flight to Berlin (TXL) is tomorrow at 10:30. Check-in is now open.
+            </p>
+            <button className="w-full py-3 bg-white/20 hover:bg-white/30 rounded-2xl text-sm font-bold transition-all flex items-center justify-center gap-2">
+              View Flight Info <ArrowRight className="w-4 h-4" />
+            </button>
           </div>
         </div>
       </div>

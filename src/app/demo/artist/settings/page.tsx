@@ -20,10 +20,11 @@ import {
 const navItems = [
   { label: "Dashboard", href: "/demo/artist", icon: LayoutDashboard },
   { label: "Schedule", href: "/demo/artist/schedule", icon: Calendar },
+  { label: "Availability", href: "/demo/artist/availability", icon: Globe },
   { label: "Documents", href: "/demo/artist/documents", icon: FileText },
   { label: "Earnings", href: "/demo/artist/earnings", icon: DollarSign },
   { label: "Travel", href: "/demo/artist/travel", icon: Plane },
-  { label: "Messages", href: "/demo/artist/messages", icon: MessageSquare },
+  { label: "Messages", href: "/demo/artist/messages", icon: MessageSquare, badge: 2 },
   { label: "Settings", href: "/demo/artist/settings", icon: Settings },
 ];
 

@@ -16,12 +16,13 @@ import {
   Shield,
   Calendar,
   Save,
+  Zap,
 } from "lucide-react";
 
 const navItems = [
   { label: "Dashboard", href: "/demo/festival", icon: LayoutDashboard },
-  { label: "Lineup", href: "/demo/festival/lineup", icon: Music },
-  { label: "Artist Requests", href: "/demo/festival/requests", icon: Users },
+  { label: "Lineup Builder", href: "/demo/festival/lineup", icon: Music },
+  { label: "Advancing", href: "/demo/festival/requests", icon: Zap, badge: 14 },
   { label: "Schedule", href: "/demo/festival/schedule", icon: CalendarDays },
   { label: "Budget", href: "/demo/festival/budget", icon: DollarSign },
   { label: "Stages", href: "/demo/festival/stages", icon: MapPin },

@@ -21,6 +21,7 @@ import {
   Key,
   Mail,
   Save,
+  Plug,
 } from "lucide-react";
 
 const navItems = [
@@ -32,6 +33,7 @@ const navItems = [
   { label: "Finance", href: "/demo/agency/finance", icon: DollarSign },
   { label: "Tours", href: "/demo/agency/tours", icon: Truck },
   { label: "Messages", href: "/demo/agency/messages", icon: MessageSquare, badge: 8 },
+  { label: "Integrations", href: "/demo/agency/integrations", icon: Plug },
   { label: "Settings", href: "/demo/agency/settings", icon: Settings },
 ];
 

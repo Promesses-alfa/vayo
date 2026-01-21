@@ -1,13 +1,13 @@
 "use client";
 
-import { motion } from "framer-motion";
 import { 
   Users, 
   Music, 
   Building2, 
   PartyPopper,
   ArrowRight,
-  Sparkles
+  Sparkles,
+  Zap,
 } from "lucide-react";
 import Link from "next/link";
 
@@ -15,185 +15,153 @@ const demoOptions = [
   {
     id: "agency",
     title: "Booking Agency",
-    description: "Manage artists, bookings, contracts, and tours from one powerful dashboard.",
+    description: "Manage roster, bookings, and financial flows from a single source of truth.",
     icon: Users,
-    color: "from-orange-500 to-amber-500",
+    color: "text-[#00d4aa]",
+    bgColor: "bg-[#00d4aa]/10",
+    borderColor: "border-[#00d4aa]/20",
+    hoverBorder: "hover:border-[#00d4aa]",
     href: "/demo/agency",
-    features: ["Artist Management", "Booking Calendar", "Contract Hub", "Financial Tools"],
-  },
-  {
-    id: "artist",
-    title: "Artist / DJ",
-    description: "Track your shows, manage your schedule, and stay connected with your team.",
-    icon: Music,
-    color: "from-purple-500 to-pink-500",
-    href: "/demo/artist",
-    features: ["Tour Schedule", "Document Access", "Earnings Overview", "Availability"],
-  },
-  {
-    id: "label",
-    title: "Record Label",
-    description: "Oversee your roster, coordinate releases, and manage artist bookings.",
-    icon: Building2,
-    color: "from-cyan-500 to-blue-500",
-    href: "/demo/label",
-    features: ["Roster Management", "Release Calendar", "Revenue Analytics", "A&R Pipeline"],
+    features: ["Artist Roster", "Booking Engine", "E-Contracting", "Finance Hub"],
   },
   {
     id: "festival",
     title: "Festival / Venue",
-    description: "Plan your lineup, manage artist relations, and coordinate logistics.",
+    description: "Build your lineup with AI help and automate the entire advancing flow.",
     icon: PartyPopper,
-    color: "from-emerald-500 to-teal-500",
+    color: "text-[#a855f7]",
+    bgColor: "bg-[#a855f7]/10",
+    borderColor: "border-[#a855f7]/20",
+    hoverBorder: "hover:border-[#a855f7]",
     href: "/demo/festival",
-    features: ["Lineup Builder", "Artist Requests", "Stage Planning", "Budget Tracker"],
+    features: ["Lineup Builder", "AI Suggestions", "Integrated Advancing", "Budgeting"],
+  },
+  {
+    id: "artist",
+    title: "Artist / DJ",
+    description: "Access your world on tour. Real-time sync with your agency and festivals.",
+    icon: Music,
+    color: "text-[#f97316]",
+    bgColor: "bg-[#f97316]/10",
+    borderColor: "border-[#f97316]/20",
+    hoverBorder: "hover:border-[#f97316]",
+    href: "/demo/artist",
+    features: ["Live Schedule", "Doc Portal", "Travel Logistics", "Mobile App"],
+  },
+  {
+    id: "label",
+    title: "Record Label",
+    description: "Oversee your global roster's performance and track touring revenue.",
+    icon: Building2,
+    color: "text-[#3b82f6]",
+    bgColor: "bg-[#3b82f6]/10",
+    borderColor: "border-[#3b82f6]/20",
+    hoverBorder: "hover:border-[#3b82f6]",
+    href: "/demo/label",
+    features: ["Roster Overview", "Revenue Analytics", "Release Sync", "A&R Pipeline"],
   },
 ];
 
 export default function LoginPage() {
   return (
-    <div className="min-h-screen bg-[var(--vayo-black)] relative overflow-hidden">
-      {/* Background Effects */}
-      <div className="absolute inset-0 bg-grid opacity-30" />
-      <div className="absolute top-0 left-1/4 w-[600px] h-[600px] rounded-full bg-[var(--vayo-accent)]/10 blur-[120px]" />
-      <div className="absolute bottom-0 right-1/4 w-[600px] h-[600px] rounded-full bg-purple-500/10 blur-[120px]" />
-
-      <div className="relative z-10 container mx-auto px-6 py-12">
-        {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="text-center mb-12"
-        >
-          <Link href="/" className="inline-flex items-center gap-2 mb-8">
-            <div className="w-12 h-12 bg-gradient-accent rounded-xl flex items-center justify-center">
-              <span className="text-white font-bold text-xl" style={{ fontFamily: "var(--font-syne)" }}>V</span>
+    <div className="min-h-screen bg-white relative overflow-hidden flex flex-col">
+      {/* Header */}
+      <header className="py-8 px-6 border-b border-gray-50">
+        <div className="container mx-auto flex items-center justify-between">
+          <Link href="/" className="flex items-center gap-2">
+            <div className="w-10 h-10 bg-[#00d4aa] rounded-xl flex items-center justify-center">
+              <span className="text-white font-bold text-lg" style={{ fontFamily: "var(--font-syne)" }}>V</span>
             </div>
-            <span className="text-2xl font-bold text-white" style={{ fontFamily: "var(--font-syne)" }}>VAYO</span>
+            <span className="text-xl font-bold text-gray-900" style={{ fontFamily: "var(--font-syne)" }}>VAYO</span>
           </Link>
+          <Link href="/" className="text-sm font-bold text-gray-500 hover:text-gray-900 transition-colors">
+            Back to site
+          </Link>
+        </div>
+      </header>
 
-          <div className="inline-flex items-center gap-2 badge mb-6">
-            <Sparkles className="w-4 h-4" />
-            <span>Demo Environment</span>
+      <main className="flex-1 relative z-10 container mx-auto px-6 py-16">
+        <div className="text-center mb-16">
+          <div className="inline-flex items-center gap-2 px-4 py-2 bg-gray-50 border border-gray-100 rounded-full text-[10px] font-bold uppercase tracking-widest text-gray-500 mb-6">
+            <Sparkles className="w-3.5 h-3.5 text-[#a855f7]" />
+            Select Your Perspective
           </div>
-
-          <h1 
-            className="text-4xl md:text-5xl font-bold text-white mb-4"
-            style={{ fontFamily: "var(--font-syne)" }}
-          >
-            One Platform. <span className="text-gradient">Every Role.</span>
+          <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6" style={{ fontFamily: "var(--font-syne)" }}>
+            Experience the <span className="text-[#00d4aa]">Ecosystem</span>
           </h1>
-          <p className="text-[var(--vayo-gray-400)] text-lg max-w-2xl mx-auto">
-            Whether you&apos;re an agency booking artists, an artist managing your career, 
-            a label overseeing your roster, or a festival planning your lineup — 
-            <span className="text-white"> VAYO connects everyone in real-time.</span>
+          <p className="text-xl text-gray-500 max-w-2xl mx-auto font-medium">
+            Explore how VAYO connects every role in the industry. Data flows seamlessly between each portal in real-time.
           </p>
-        </motion.div>
+        </div>
 
         {/* Demo Options Grid */}
-        <div className="grid md:grid-cols-2 gap-6 max-w-5xl mx-auto">
-          {demoOptions.map((option, index) => (
-            <motion.div
-              key={option.id}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: index * 0.1 }}
-            >
-              <Link href={option.href} className="block group">
-                <div className="relative bg-[var(--vayo-gray-900)] border border-[var(--vayo-gray-800)] rounded-2xl p-6 hover:border-[var(--vayo-gray-700)] transition-all duration-300 overflow-hidden">
-                  {/* Gradient Glow on Hover */}
-                  <div className={`absolute inset-0 bg-gradient-to-br ${option.color} opacity-0 group-hover:opacity-5 transition-opacity duration-300`} />
-                  
-                  <div className="relative z-10">
-                    {/* Icon */}
-                    <div className={`w-14 h-14 rounded-xl bg-gradient-to-br ${option.color} flex items-center justify-center mb-4`}>
-                      <option.icon className="w-7 h-7 text-white" />
-                    </div>
-
-                    {/* Title & Description */}
-                    <h2 className="text-xl font-bold text-white mb-2 group-hover:text-gradient transition-colors">
-                      {option.title}
-                    </h2>
-                    <p className="text-[var(--vayo-gray-400)] text-sm mb-4">
-                      {option.description}
-                    </p>
-
-                    {/* Features */}
-                    <div className="flex flex-wrap gap-2 mb-4">
-                      {option.features.map((feature) => (
-                        <span 
-                          key={feature}
-                          className="px-3 py-1 text-xs rounded-full bg-[var(--vayo-gray-800)] text-[var(--vayo-gray-300)]"
-                        >
-                          {feature}
-                        </span>
-                      ))}
-                    </div>
-
-                    {/* CTA */}
-                    <div className="flex items-center gap-2 text-[var(--vayo-accent)] font-medium text-sm group-hover:gap-3 transition-all">
-                      <span>Enter Demo</span>
-                      <ArrowRight className="w-4 h-4" />
-                    </div>
+        <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto mb-20">
+          {demoOptions.map((option) => (
+            <Link key={option.id} href={option.href} className="group">
+              <div className={`h-full relative bg-white border ${option.borderColor} ${option.hoverBorder} rounded-[2.5rem] p-8 shadow-sm group-hover:shadow-xl transition-all duration-300 flex flex-col`}>
+                {/* Top accent line */}
+                <div className={`absolute top-0 left-0 right-0 h-1.5 ${option.color.replace('text', 'bg')} rounded-t-full opacity-50 group-hover:opacity-100 transition-opacity`} />
+                
+                <div className="flex items-center justify-between mb-6">
+                  <div className={`w-16 h-16 rounded-2xl ${option.bgColor} flex items-center justify-center group-hover:scale-110 transition-transform duration-300`}>
+                    <option.icon className={`w-8 h-8 ${option.color}`} />
+                  </div>
+                  <div className="p-3 bg-gray-50 rounded-xl group-hover:bg-gray-100 transition-colors">
+                    <ArrowRight className={`w-5 h-5 ${option.color}`} />
                   </div>
                 </div>
-              </Link>
-            </motion.div>
+
+                <h2 className="text-2xl font-bold text-gray-900 mb-3 group-hover:text-[#00d4aa] transition-colors" style={{ fontFamily: "var(--font-syne)" }}>
+                  {option.title}
+                </h2>
+                <p className="text-gray-500 font-medium mb-8 flex-1">
+                  {option.description}
+                </p>
+
+                <div className="flex flex-wrap gap-2">
+                  {option.features.map((feature) => (
+                    <span 
+                      key={feature}
+                      className="px-3 py-1.5 text-[10px] font-bold uppercase tracking-widest rounded-lg bg-gray-50 text-gray-400 group-hover:text-gray-600 transition-colors"
+                    >
+                      {feature}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </Link>
           ))}
         </div>
 
-        {/* Connection Info */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.5 }}
-          className="max-w-2xl mx-auto mt-12 mb-8"
-        >
-          <div className="bg-[var(--vayo-gray-900)]/50 border border-[var(--vayo-gray-800)] rounded-xl p-6 text-center">
-            <div className="flex items-center justify-center gap-2 mb-3">
-              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-orange-500 to-amber-500 flex items-center justify-center">
-                <Users className="w-4 h-4 text-white" />
-              </div>
-              <ArrowRight className="w-4 h-4 text-[var(--vayo-gray-600)]" />
-              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center">
-                <Music className="w-4 h-4 text-white" />
-              </div>
-              <ArrowRight className="w-4 h-4 text-[var(--vayo-gray-600)]" />
-              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-cyan-500 to-blue-500 flex items-center justify-center">
-                <Building2 className="w-4 h-4 text-white" />
-              </div>
-              <ArrowRight className="w-4 h-4 text-[var(--vayo-gray-600)]" />
-              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-emerald-500 to-teal-500 flex items-center justify-center">
-                <PartyPopper className="w-4 h-4 text-white" />
-              </div>
+        {/* Integrated Note */}
+        <div className="max-w-3xl mx-auto bg-gray-900 rounded-[3rem] p-8 md:p-12 text-center text-white relative overflow-hidden">
+          <div className="absolute top-0 left-0 w-full h-full opacity-10 bg-grid invert" />
+          <div className="relative z-10">
+            <div className="flex justify-center -space-x-3 mb-8">
+              {demoOptions.map((opt) => (
+                <div key={opt.id} className={`w-12 h-12 rounded-full ${opt.bgColor.replace('/10', '')} border-4 border-gray-900 flex items-center justify-center`}>
+                  <opt.icon className="w-5 h-5 text-white" />
+                </div>
+              ))}
             </div>
-            <p className="text-sm text-[var(--vayo-gray-400)]">
-              All portals share the same data in real-time. 
-              <span className="text-[var(--vayo-accent)]"> Every update syncs instantly.</span>
+            <h3 className="text-2xl font-bold mb-4" style={{ fontFamily: "var(--font-syne)" }}>One Integrated Solution</h3>
+            <p className="text-gray-400 font-medium mb-8 max-w-lg mx-auto">
+              Changes in the <span className="text-[#00d4aa]">Agency Portal</span> update the <span className="text-[#a855f7]">Festival Lineup</span> and <span className="text-[#f97316]">Artist Schedule</span> instantly. No more data silos.
             </p>
+            <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/10 rounded-full text-xs font-bold text-white uppercase tracking-widest">
+              <Zap className="w-4 h-4 text-[#00d4aa] fill-[#00d4aa]" />
+              Real-time Sync Active
+            </div>
           </div>
-        </motion.div>
+        </div>
+      </main>
 
-        {/* Bottom Links */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.6 }}
-          className="text-center space-y-4"
-        >
-          <p className="text-[var(--vayo-gray-500)] text-sm">
-            Already have an account?{" "}
-            <a href="#" className="text-[var(--vayo-accent)] hover:underline">
-              Sign in here
-            </a>
-          </p>
-          <p className="text-[var(--vayo-gray-500)] text-sm">
-            <Link href="/" className="text-[var(--vayo-gray-400)] hover:text-white transition-colors">
-              ← Back to homepage
-            </Link>
-          </p>
-        </motion.div>
-      </div>
+      {/* Footer */}
+      <footer className="py-12 border-t border-gray-50">
+        <div className="container mx-auto px-6 text-center">
+          <p className="text-sm font-bold text-gray-400 uppercase tracking-widest">© 2026 VAYO TECH ENTERPRISES</p>
+        </div>
+      </footer>
     </div>
   );
 }

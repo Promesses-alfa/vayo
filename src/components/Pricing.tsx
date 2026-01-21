@@ -1,8 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { useInView } from "framer-motion";
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { Check, Users, Music, Building2, PartyPopper, ArrowRight } from "lucide-react";
 
 const stakeholderPlans = [
@@ -10,7 +8,10 @@ const stakeholderPlans = [
     id: "agencies",
     name: "For Agencies",
     icon: Users,
-    color: "bg-[#00d4aa]",
+    color: "text-[#00d4aa]",
+    bgColor: "bg-[#00d4aa]/10",
+    borderColor: "border-[#00d4aa]/20",
+    hoverBorder: "hover:border-[#00d4aa]",
     description: "Manage roster, bookings & client relationships",
     monthlyPrice: 149,
     yearlyPrice: 119,
@@ -30,7 +31,10 @@ const stakeholderPlans = [
     id: "festivals",
     name: "For Festivals",
     icon: PartyPopper,
-    color: "bg-[#a855f7]",
+    color: "text-[#a855f7]",
+    bgColor: "bg-[#a855f7]/10",
+    borderColor: "border-[#a855f7]/20",
+    hoverBorder: "hover:border-[#a855f7]",
     description: "Build lineups & manage advancing",
     monthlyPrice: 199,
     yearlyPrice: 159,
@@ -50,7 +54,10 @@ const stakeholderPlans = [
     id: "artists",
     name: "For Artists",
     icon: Music,
-    color: "bg-[#f97316]",
+    color: "text-[#f97316]",
+    bgColor: "bg-[#f97316]/10",
+    borderColor: "border-[#f97316]/20",
+    hoverBorder: "hover:border-[#f97316]",
     description: "All your tour info in one place",
     monthlyPrice: 0,
     yearlyPrice: 0,
@@ -70,7 +77,10 @@ const stakeholderPlans = [
     id: "labels",
     name: "For Labels",
     icon: Building2,
-    color: "bg-[#3b82f6]",
+    color: "text-[#3b82f6]",
+    bgColor: "bg-[#3b82f6]/10",
+    borderColor: "border-[#3b82f6]/20",
+    hoverBorder: "hover:border-[#3b82f6]",
     description: "Track touring activity & revenue",
     monthlyPrice: 99,
     yearlyPrice: 79,
@@ -89,20 +99,13 @@ const stakeholderPlans = [
 ];
 
 export default function Pricing() {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
   const [isYearly, setIsYearly] = useState(true);
 
   return (
-    <section id="pricing" ref={ref} className="py-24 bg-white">
+    <section id="pricing" className="py-24 bg-white">
       <div className="container mx-auto px-6">
         {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-12"
-        >
+        <div className="text-center mb-12">
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6" style={{ fontFamily: "var(--font-syne)" }}>
             One platform,<br />
             <span className="text-[#a855f7]">built for everyone</span>
@@ -138,21 +141,21 @@ export default function Pricing() {
               </span>
             </button>
           </div>
-        </motion.div>
+        </div>
 
         {/* Pricing Cards */}
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {stakeholderPlans.map((plan, index) => (
-            <motion.div
+          {stakeholderPlans.map((plan) => (
+            <div
               key={plan.id}
-              initial={{ opacity: 0, y: 20 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-              className="bg-white p-6 rounded-2xl border border-gray-200 hover:border-gray-300 hover:shadow-lg transition-all group"
+              className={`bg-white p-6 rounded-2xl border ${plan.borderColor} ${plan.hoverBorder} transition-all duration-300 group hover:shadow-lg relative overflow-hidden`}
             >
+              {/* Top accent line */}
+              <div className={`absolute top-0 left-0 right-0 h-1 ${plan.color.replace('text', 'bg')}`} />
+
               {/* Icon */}
-              <div className={`w-14 h-14 ${plan.color} rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform`}>
-                <plan.icon className="w-7 h-7 text-white" />
+              <div className={`w-14 h-14 ${plan.bgColor} rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300`}>
+                <plan.icon className={`w-7 h-7 ${plan.color}`} />
               </div>
 
               <h3 className="text-xl font-bold text-gray-900 mb-2">{plan.name}</h3>
@@ -179,40 +182,35 @@ export default function Pricing() {
               </div>
 
               {/* Highlight */}
-              <div className="mb-4 px-3 py-2 rounded-lg bg-gray-50 border border-gray-100">
-                <p className="text-xs font-medium text-[#00d4aa]">✨ {plan.highlight}</p>
+              <div className={`mb-4 px-3 py-2 rounded-lg ${plan.bgColor} border ${plan.borderColor}`}>
+                <p className={`text-xs font-medium ${plan.color}`}>✨ {plan.highlight}</p>
               </div>
 
               {/* Features */}
               <ul className="space-y-2 mb-6">
                 {plan.features.map((feature) => (
                   <li key={feature} className="flex items-start gap-2 text-sm text-gray-600">
-                    <Check className="w-4 h-4 text-[#00d4aa] flex-shrink-0 mt-0.5" />
+                    <Check className={`w-4 h-4 ${plan.color} flex-shrink-0 mt-0.5`} />
                     {feature}
                   </li>
                 ))}
               </ul>
 
               {/* CTA */}
-              <button className="w-full py-3 rounded-full font-semibold text-sm border border-gray-200 text-gray-700 hover:bg-gray-50 transition-all flex items-center justify-center gap-2">
+              <button className={`w-full py-3 rounded-full font-semibold text-sm border ${plan.borderColor} text-gray-700 hover:bg-gray-50 transition-all flex items-center justify-center gap-2`}>
                 Get started
                 <ArrowRight className="w-4 h-4" />
               </button>
-            </motion.div>
+            </div>
           ))}
         </div>
 
         {/* Integration Note */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6, delay: 0.5 }}
-          className="mt-12 text-center"
-        >
+        <div className="mt-12 text-center">
           <div className="inline-flex items-center gap-3 px-6 py-3 rounded-full bg-gray-50 border border-gray-200">
             <div className="flex -space-x-2">
               {stakeholderPlans.map((plan) => (
-                <div key={plan.id} className={`w-8 h-8 ${plan.color} rounded-full flex items-center justify-center border-2 border-white`}>
+                <div key={plan.id} className={`w-8 h-8 ${plan.color.replace('text', 'bg')} rounded-full flex items-center justify-center border-2 border-white`}>
                   <plan.icon className="w-4 h-4 text-white" />
                 </div>
               ))}
@@ -221,7 +219,7 @@ export default function Pricing() {
               All modules <span className="text-[#00d4aa] font-medium">work together</span> — one ecosystem
             </p>
           </div>
-        </motion.div>
+        </div>
 
         <p className="text-center text-sm text-gray-400 mt-8">
           All prices in EUR. VAT may apply. 14-day free trial. Cancel anytime.

@@ -21,7 +21,7 @@ const navItems = [
   { label: "Bookings", href: "/demo/label/bookings", icon: Calendar },
   { label: "Revenue", href: "/demo/label/revenue", icon: DollarSign },
   { label: "A&R Pipeline", href: "/demo/label/pipeline", icon: TrendingUp },
-  { label: "Messages", href: "/demo/label/messages", icon: MessageSquare },
+  { label: "Messages", href: "/demo/label/messages", icon: MessageSquare, badge: 4 },
   { label: "Settings", href: "/demo/label/settings", icon: Settings },
 ];
 

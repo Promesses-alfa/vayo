@@ -1,14 +1,20 @@
 @import "tailwindcss";
 
 :root {
-  /* Primary Accent - Turquoise/Mint (like SystemOne) */
-  --vayo-accent: #00d4aa;
+  /* Module Colors */
+  --vayo-agency: #00d4aa;
+  --vayo-festival: #a855f7;
+  --vayo-artist: #f97316;
+  --vayo-label: #3b82f6;
+
+  /* Primary Accent - Turquoise/Mint (Agency color as primary) */
+  --vayo-accent: var(--vayo-agency);
   --vayo-accent-light: #33e0be;
   --vayo-accent-dark: #00b894;
   --vayo-accent-glow: rgba(0, 212, 170, 0.2);
   
   /* Secondary - Purple for contrast */
-  --vayo-secondary: #a855f7;
+  --vayo-secondary: var(--vayo-festival);
   --vayo-secondary-light: #c084fc;
   
   /* Backgrounds - Pure white */

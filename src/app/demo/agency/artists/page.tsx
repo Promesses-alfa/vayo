@@ -2,7 +2,6 @@
 
 import DashboardLayout from "@/components/dashboard/DashboardLayout";
 import { useState } from "react";
-import { motion } from "framer-motion";
 import {
   LayoutDashboard,
   Calendar,
@@ -13,17 +12,17 @@ import {
   MessageSquare,
   Settings,
   Search,
-  Filter,
   Plus,
   MoreHorizontal,
   Mail,
   Phone,
   MapPin,
   Star,
-  TrendingUp,
   Eye,
   Edit,
-  ExternalLink,
+  ChevronRight,
+  Filter,
+  Plug,
 } from "lucide-react";
 
 const navItems = [
@@ -35,6 +34,7 @@ const navItems = [
   { label: "Finance", href: "/demo/agency/finance", icon: DollarSign },
   { label: "Tours", href: "/demo/agency/tours", icon: Truck },
   { label: "Messages", href: "/demo/agency/messages", icon: MessageSquare, badge: 8 },
+  { label: "Integrations", href: "/demo/agency/integrations", icon: Plug },
   { label: "Settings", href: "/demo/agency/settings", icon: Settings },
 ];
 
@@ -95,47 +95,16 @@ const artists = [
     email: "contact@aurorabeats.de",
     phone: "+49 30 1234 5678",
   },
-  {
-    id: 5,
-    name: "Neon Dreams",
-    genre: "Synthwave",
-    location: "Paris, FR",
-    rating: 4.6,
-    shows: 67,
-    revenue: "€189,000",
-    status: "active",
-    image: null,
-    initials: "ND",
-    email: "booking@neondreams.fr",
-    phone: "+33 1 23 45 67 89",
-  },
-  {
-    id: 6,
-    name: "Pulse",
-    genre: "Drum & Bass",
-    location: "Bristol, UK",
-    rating: 4.8,
-    shows: 203,
-    revenue: "€567,000",
-    status: "active",
-    image: null,
-    initials: "PL",
-    email: "info@pulsemusic.uk",
-    phone: "+44 117 123 4567",
-  },
 ];
 
 export default function ArtistsPage() {
   const [view, setView] = useState<"grid" | "list">("grid");
   const [searchQuery, setSearchQuery] = useState("");
-  const [statusFilter, setStatusFilter] = useState("all");
 
-  const filteredArtists = artists.filter((artist) => {
-    const matchesSearch = artist.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      artist.genre.toLowerCase().includes(searchQuery.toLowerCase());
-    const matchesStatus = statusFilter === "all" || artist.status === statusFilter;
-    return matchesSearch && matchesStatus;
-  });
+  const filteredArtists = artists.filter((artist) => 
+    artist.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    artist.genre.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   return (
     <DashboardLayout
@@ -144,56 +113,53 @@ export default function ArtistsPage() {
       userName="Sarah van der Berg"
       userRole="Agency Director"
     >
-      {/* Page Header */}
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-8">
         <div>
-          <h1 className="text-2xl font-bold text-white" style={{ fontFamily: "var(--font-syne)" }}>
-            Artists
+          <h1 className="text-3xl font-bold text-gray-900" style={{ fontFamily: "var(--font-syne)" }}>
+            Artist Roster
           </h1>
-          <p className="text-[var(--vayo-gray-400)]">
-            Manage your artist roster and their profiles.
-          </p>
+          <p className="text-gray-500 font-medium">Manage and monitor your global roster.</p>
         </div>
-        <button className="btn-primary text-sm py-2.5">
+        <button className="px-4 py-2 bg-[#00d4aa] rounded-xl text-sm font-bold text-white hover:bg-[#00b894] transition-all flex items-center gap-2 shadow-md shadow-[#00d4aa]/20">
           <Plus className="w-4 h-4" />
-          Add Artist
+          Add New Artist
         </button>
       </div>
 
-      {/* Filters */}
-      <div className="flex flex-col md:flex-row gap-4 mb-6">
-        <div className="flex-1 relative">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-[var(--vayo-gray-500)]" />
-          <input
-            type="text"
-            placeholder="Search artists..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-[var(--vayo-gray-900)] border border-[var(--vayo-gray-800)] text-white placeholder-[var(--vayo-gray-500)] focus:outline-none focus:border-[var(--vayo-accent)]"
-          />
-        </div>
-        <div className="flex gap-3">
-          <select
-            value={statusFilter}
-            onChange={(e) => setStatusFilter(e.target.value)}
-            className="px-4 py-2.5 rounded-xl bg-[var(--vayo-gray-900)] border border-[var(--vayo-gray-800)] text-white focus:outline-none focus:border-[var(--vayo-accent)]"
-          >
-            <option value="all">All Status</option>
-            <option value="active">Active</option>
-            <option value="inactive">Inactive</option>
-          </select>
-          <div className="flex rounded-xl border border-[var(--vayo-gray-800)] overflow-hidden">
-            <button
-              onClick={() => setView("grid")}
-              className={`px-4 py-2.5 ${view === "grid" ? "bg-[var(--vayo-accent)] text-white" : "bg-[var(--vayo-gray-900)] text-[var(--vayo-gray-400)]"}`}
-            >
-              Grid
-            </button>
-            <button
-              onClick={() => setView("list")}
-              className={`px-4 py-2.5 ${view === "list" ? "bg-[var(--vayo-accent)] text-white" : "bg-[var(--vayo-gray-900)] text-[var(--vayo-gray-400)]"}`}
-            >
-              List
+      {/* Builder Tools */}
+      <div className="bg-white border border-gray-100 rounded-3xl shadow-sm p-6 mb-8">
+        <div className="flex flex-col md:flex-row gap-4">
+          <div className="flex-1 relative">
+            <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+            <input
+              type="text"
+              placeholder="Search by name, genre or location..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="w-full pl-12 pr-4 py-3 rounded-2xl bg-gray-50 border border-gray-100 text-gray-900 placeholder-gray-400 focus:outline-none focus:border-[#00d4aa] font-medium"
+            />
+          </div>
+          <div className="flex gap-3">
+            <div className="flex bg-gray-100 p-1 rounded-2xl">
+              <button
+                onClick={() => setView("grid")}
+                className={`px-4 py-2 rounded-xl text-xs font-bold transition-all ${
+                  view === "grid" ? "bg-white text-gray-900 shadow-sm" : "text-gray-500"
+                }`}
+              >
+                Grid
+              </button>
+              <button
+                onClick={() => setView("list")}
+                className={`px-4 py-2 rounded-xl text-xs font-bold transition-all ${
+                  view === "list" ? "bg-white text-gray-900 shadow-sm" : "text-gray-500"
+                }`}
+              >
+                List
+              </button>
+            </div>
+            <button className="p-3 bg-gray-50 border border-gray-100 rounded-2xl text-gray-400 hover:text-[#00d4aa] transition-all">
+              <Filter className="w-5 h-5" />
             </button>
           </div>
         </div>
@@ -201,143 +167,100 @@ export default function ArtistsPage() {
 
       {/* Artists Grid */}
       {view === "grid" ? (
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredArtists.map((artist, index) => (
-            <motion.div
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {filteredArtists.map((artist) => (
+            <div
               key={artist.id}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: index * 0.05 }}
-              className="bg-[var(--vayo-gray-900)] border border-[var(--vayo-gray-800)] rounded-xl overflow-hidden hover:border-[var(--vayo-gray-700)] transition-colors group"
+              className="bg-white border border-gray-100 rounded-[2rem] overflow-hidden hover:shadow-xl transition-all duration-300 group"
             >
-              {/* Header */}
-              <div className="relative p-6 pb-4">
-                <div className="absolute top-4 right-4 flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                  <button className="p-2 rounded-lg bg-[var(--vayo-gray-800)] hover:bg-[var(--vayo-gray-700)] text-[var(--vayo-gray-400)]">
-                    <Eye className="w-4 h-4" />
-                  </button>
-                  <button className="p-2 rounded-lg bg-[var(--vayo-gray-800)] hover:bg-[var(--vayo-gray-700)] text-[var(--vayo-gray-400)]">
-                    <Edit className="w-4 h-4" />
-                  </button>
-                </div>
-                <div className="flex items-center gap-4">
+              <div className="p-6">
+                <div className="flex justify-between items-start mb-6">
                   {artist.image ? (
                     <img 
                       src={artist.image} 
                       alt={artist.name}
-                      className="w-16 h-16 rounded-xl object-cover"
+                      className="w-20 h-20 rounded-2xl object-cover shadow-lg group-hover:scale-105 transition-transform duration-500"
                     />
                   ) : (
-                    <div className="w-16 h-16 rounded-xl bg-gradient-to-br from-orange-500 to-amber-500 flex items-center justify-center text-white text-xl font-bold">
+                    <div className="w-20 h-20 rounded-2xl bg-gray-100 flex items-center justify-center text-gray-400 text-2xl font-bold">
                       {artist.initials}
                     </div>
                   )}
+                  <button className="p-2 bg-gray-50 rounded-xl text-gray-400 hover:text-[#00d4aa] transition-colors">
+                    <MoreHorizontal className="w-5 h-5" />
+                  </button>
+                </div>
+
+                <div className="mb-6">
+                  <h3 className="text-xl font-bold text-gray-900 mb-1 group-hover:text-[#00d4aa] transition-colors">{artist.name}</h3>
+                  <p className="text-[10px] font-bold text-[#00d4aa] uppercase tracking-widest">{artist.genre}</p>
+                  <div className="flex items-center gap-1.5 mt-2 text-gray-400">
+                    <MapPin className="w-3.5 h-3.5" />
+                    <span className="text-xs font-bold">{artist.location}</span>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-2 gap-4 mb-6 pt-6 border-t border-gray-50">
                   <div>
-                    <h3 className="text-lg font-semibold text-white">{artist.name}</h3>
-                    <p className="text-sm text-[var(--vayo-gray-400)]">{artist.genre}</p>
-                    <div className="flex items-center gap-1 mt-1">
-                      <MapPin className="w-3 h-3 text-[var(--vayo-gray-500)]" />
-                      <span className="text-xs text-[var(--vayo-gray-500)]">{artist.location}</span>
-                    </div>
+                    <p className="text-[10px] font-bold text-gray-400 uppercase tracking-tighter mb-1">Total Shows</p>
+                    <p className="text-lg font-bold text-gray-900">{artist.shows}</p>
+                  </div>
+                  <div>
+                    <p className="text-[10px] font-bold text-gray-400 uppercase tracking-tighter mb-1">MTD Revenue</p>
+                    <p className="text-lg font-bold text-[#00d4aa]">{artist.revenue.split(',')[0]}K</p>
                   </div>
                 </div>
-              </div>
 
-              {/* Stats */}
-              <div className="grid grid-cols-3 gap-4 px-6 py-4 border-t border-[var(--vayo-gray-800)]">
-                <div className="text-center">
-                  <div className="flex items-center justify-center gap-1 text-yellow-500 mb-1">
-                    <Star className="w-4 h-4 fill-current" />
-                    <span className="font-semibold">{artist.rating}</span>
-                  </div>
-                  <p className="text-xs text-[var(--vayo-gray-500)]">Rating</p>
-                </div>
-                <div className="text-center">
-                  <p className="font-semibold text-white">{artist.shows}</p>
-                  <p className="text-xs text-[var(--vayo-gray-500)]">Shows</p>
-                </div>
-                <div className="text-center">
-                  <p className="font-semibold text-[var(--vayo-accent)]">{artist.revenue}</p>
-                  <p className="text-xs text-[var(--vayo-gray-500)]">Revenue</p>
+                <div className="flex gap-2">
+                  <button className="flex-1 py-3 bg-gray-900 text-white rounded-2xl text-[10px] font-bold uppercase tracking-widest hover:bg-gray-800 transition-all">
+                    Profile
+                  </button>
+                  <a href={`mailto:${artist.email}`} className="p-3 bg-gray-50 border border-gray-100 rounded-2xl text-gray-400 hover:text-[#00d4aa] transition-all">
+                    <Mail className="w-4 h-4" />
+                  </a>
                 </div>
               </div>
-
-              {/* Contact */}
-              <div className="px-6 py-4 border-t border-[var(--vayo-gray-800)] bg-[var(--vayo-gray-800)]/30">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-3">
-                    <a href={`mailto:${artist.email}`} className="p-2 rounded-lg hover:bg-[var(--vayo-gray-700)] text-[var(--vayo-gray-400)]">
-                      <Mail className="w-4 h-4" />
-                    </a>
-                    <a href={`tel:${artist.phone}`} className="p-2 rounded-lg hover:bg-[var(--vayo-gray-700)] text-[var(--vayo-gray-400)]">
-                      <Phone className="w-4 h-4" />
-                    </a>
-                  </div>
-                  <span className={`px-3 py-1 rounded-full text-xs font-medium ${
-                    artist.status === "active"
-                      ? "bg-emerald-500/20 text-emerald-500"
-                      : "bg-[var(--vayo-gray-700)] text-[var(--vayo-gray-400)]"
-                  }`}>
-                    {artist.status.charAt(0).toUpperCase() + artist.status.slice(1)}
-                  </span>
-                </div>
-              </div>
-            </motion.div>
+            </div>
           ))}
         </div>
       ) : (
-        /* List View */
-        <div className="bg-[var(--vayo-gray-900)] border border-[var(--vayo-gray-800)] rounded-xl overflow-hidden">
+        <div className="bg-white border border-gray-100 rounded-3xl shadow-sm overflow-hidden">
           <table className="w-full">
             <thead>
-              <tr className="border-b border-[var(--vayo-gray-800)]">
-                <th className="text-left p-4 text-sm font-medium text-[var(--vayo-gray-400)]">Artist</th>
-                <th className="text-left p-4 text-sm font-medium text-[var(--vayo-gray-400)] hidden md:table-cell">Genre</th>
-                <th className="text-left p-4 text-sm font-medium text-[var(--vayo-gray-400)] hidden lg:table-cell">Location</th>
-                <th className="text-center p-4 text-sm font-medium text-[var(--vayo-gray-400)]">Shows</th>
-                <th className="text-right p-4 text-sm font-medium text-[var(--vayo-gray-400)]">Revenue</th>
-                <th className="text-center p-4 text-sm font-medium text-[var(--vayo-gray-400)]">Status</th>
-                <th className="p-4"></th>
+              <tr className="bg-gray-50/50 border-b border-gray-100">
+                <th className="text-left p-6 text-[10px] font-bold uppercase tracking-widest text-gray-400">Artist</th>
+                <th className="text-left p-6 text-[10px] font-bold uppercase tracking-widest text-gray-400">Location</th>
+                <th className="text-right p-6 text-[10px] font-bold uppercase tracking-widest text-gray-400">Shows</th>
+                <th className="text-right p-6 text-[10px] font-bold uppercase tracking-widest text-gray-400">Revenue</th>
+                <th className="text-center p-6 text-[10px] font-bold uppercase tracking-widest text-gray-400">Status</th>
+                <th className="p-6"></th>
               </tr>
             </thead>
-            <tbody>
+            <tbody className="divide-y divide-gray-50">
               {filteredArtists.map((artist) => (
-                <tr key={artist.id} className="border-b border-[var(--vayo-gray-800)] hover:bg-[var(--vayo-gray-800)]/50 transition-colors">
-                  <td className="p-4">
-                    <div className="flex items-center gap-3">
+                <tr key={artist.id} className="hover:bg-gray-50/50 transition-all group">
+                  <td className="p-6">
+                    <div className="flex items-center gap-4">
                       {artist.image ? (
-                        <img 
-                          src={artist.image} 
-                          alt={artist.name}
-                          className="w-10 h-10 rounded-lg object-cover"
-                        />
+                        <img src={artist.image} className="w-10 h-10 rounded-xl object-cover" alt="" />
                       ) : (
-                        <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-orange-500 to-amber-500 flex items-center justify-center text-white font-semibold text-sm">
-                          {artist.initials}
-                        </div>
+                        <div className="w-10 h-10 rounded-xl bg-gray-100 flex items-center justify-center text-gray-400 font-bold">{artist.initials}</div>
                       )}
                       <div>
-                        <p className="font-medium text-white">{artist.name}</p>
-                        <p className="text-sm text-[var(--vayo-gray-500)] md:hidden">{artist.genre}</p>
+                        <p className="text-gray-900 font-bold">{artist.name}</p>
+                        <p className="text-[10px] font-bold text-[#00d4aa] uppercase tracking-widest">{artist.genre}</p>
                       </div>
                     </div>
                   </td>
-                  <td className="p-4 text-[var(--vayo-gray-300)] hidden md:table-cell">{artist.genre}</td>
-                  <td className="p-4 text-[var(--vayo-gray-300)] hidden lg:table-cell">{artist.location}</td>
-                  <td className="p-4 text-center text-white">{artist.shows}</td>
-                  <td className="p-4 text-right text-[var(--vayo-accent)] font-medium">{artist.revenue}</td>
-                  <td className="p-4 text-center">
-                    <span className={`px-3 py-1 rounded-full text-xs font-medium ${
-                      artist.status === "active"
-                        ? "bg-emerald-500/20 text-emerald-500"
-                        : "bg-[var(--vayo-gray-700)] text-[var(--vayo-gray-400)]"
-                    }`}>
-                      {artist.status.charAt(0).toUpperCase() + artist.status.slice(1)}
-                    </span>
+                  <td className="p-6 text-sm font-bold text-gray-500">{artist.location}</td>
+                  <td className="p-6 text-right font-bold text-gray-900">{artist.shows}</td>
+                  <td className="p-6 text-right font-bold text-[#00d4aa]">{artist.revenue}</td>
+                  <td className="p-6 text-center">
+                    <span className="px-3 py-1 bg-emerald-100 text-emerald-600 rounded-lg text-[10px] font-bold uppercase tracking-wider">Active</span>
                   </td>
-                  <td className="p-4">
-                    <button className="p-2 hover:bg-[var(--vayo-gray-700)] rounded-lg">
-                      <MoreHorizontal className="w-4 h-4 text-[var(--vayo-gray-400)]" />
+                  <td className="p-6 text-right">
+                    <button className="p-2 hover:bg-gray-100 rounded-xl transition-colors">
+                      <ChevronRight className="w-5 h-5 text-gray-400" />
                     </button>
                   </td>
                 </tr>
