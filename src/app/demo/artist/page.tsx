@@ -17,6 +17,7 @@ import {
   CheckCircle2,
   ChevronRight,
   Globe,
+  ArrowRight,
 } from "lucide-react";
 import Link from "next/link";
 

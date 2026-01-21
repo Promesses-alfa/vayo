@@ -14,6 +14,7 @@ import {
   ArrowDownRight,
   PieChart,
   PartyPopper,
+  Play,
 } from "lucide-react";
 
 const navItems = [
