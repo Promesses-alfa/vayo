@@ -52,8 +52,8 @@ const stakeholderPlans = [
     icon: Music,
     color: "bg-[#f97316]",
     description: "All your tour info in one place",
-    monthlyPrice: 29,
-    yearlyPrice: 19,
+    monthlyPrice: 0,
+    yearlyPrice: 0,
     features: [
       "Complete tour schedule",
       "Document access",
@@ -64,7 +64,7 @@ const stakeholderPlans = [
       "Earnings overview",
       "Calendar sync",
     ],
-    highlight: "Free when your agency uses VAYO",
+    highlight: "Always free for artists",
   },
   {
     id: "labels",
@@ -160,12 +160,21 @@ export default function Pricing() {
 
               {/* Price */}
               <div className="mb-4">
-                <span className="text-3xl font-bold text-gray-900">
-                  €{isYearly ? plan.yearlyPrice : plan.monthlyPrice}
-                </span>
-                <span className="text-gray-500">/mo</span>
-                {isYearly && (
-                  <p className="text-xs text-gray-400 mt-1">Billed annually</p>
+                {plan.monthlyPrice === 0 ? (
+                  <>
+                    <span className="text-3xl font-bold text-gray-900">Free</span>
+                    <p className="text-xs text-gray-400 mt-1">Forever</p>
+                  </>
+                ) : (
+                  <>
+                    <span className="text-3xl font-bold text-gray-900">
+                      €{isYearly ? plan.yearlyPrice : plan.monthlyPrice}
+                    </span>
+                    <span className="text-gray-500">/mo</span>
+                    {isYearly && (
+                      <p className="text-xs text-gray-400 mt-1">Billed annually</p>
+                    )}
+                  </>
                 )}
               </div>
 
