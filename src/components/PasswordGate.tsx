@@ -130,7 +130,7 @@ export default function PasswordGate({ children }: PasswordGateProps) {
             <ellipse cx="125" cy="15" rx="20" ry="18" fill="#cc0000" />
             <ellipse cx="100" cy="8" rx="22" ry="15" fill="#8B0000" />
             
-            {/* Hands gripping - on sides */}
+            {/* Left hand gripping */}
             <g transform="translate(-15, 140)">
               <ellipse cx="30" cy="20" rx="12" ry="8" fill="#f5e6d3" />
               <ellipse cx="20" cy="15" rx="5" ry="12" fill="#f5e6d3" />
@@ -138,13 +138,23 @@ export default function PasswordGate({ children }: PasswordGateProps) {
               <ellipse cx="36" cy="14" rx="5" ry="13" fill="#f5e6d3" />
               <ellipse cx="43" cy="18" rx="5" ry="11" fill="#f5e6d3" />
             </g>
-            <g transform="translate(155, 140)">
-              <ellipse cx="30" cy="20" rx="12" ry="8" fill="#f5e6d3" />
-              <ellipse cx="17" cy="18" rx="5" ry="11" fill="#f5e6d3" />
-              <ellipse cx="24" cy="14" rx="5" ry="13" fill="#f5e6d3" />
-              <ellipse cx="32" cy="12" rx="5" ry="14" fill="#f5e6d3" />
-              <ellipse cx="40" cy="15" rx="5" ry="12" fill="#f5e6d3" />
-            </g>
+            {/* Right hand with middle finger up! */}
+            <motion.g 
+              transform="translate(155, 120)"
+              animate={{ y: [0, -5, 0] }}
+              transition={{ repeat: Infinity, duration: 0.8, ease: "easeInOut" }}
+            >
+              {/* Palm */}
+              <ellipse cx="30" cy="35" rx="14" ry="10" fill="#f5e6d3" />
+              {/* Curled fingers (down) */}
+              <ellipse cx="17" cy="38" rx="5" ry="8" fill="#f5e6d3" />
+              <ellipse cx="24" cy="40" rx="5" ry="7" fill="#f5e6d3" />
+              <ellipse cx="38" cy="40" rx="5" ry="7" fill="#f5e6d3" />
+              <ellipse cx="44" cy="38" rx="5" ry="8" fill="#f5e6d3" />
+              {/* Middle finger UP! */}
+              <ellipse cx="31" cy="15" rx="5" ry="18" fill="#f5e6d3" />
+              <ellipse cx="31" cy="2" rx="4" ry="5" fill="#f5e6d3" />
+            </motion.g>
           </svg>
         </motion.div>
 
