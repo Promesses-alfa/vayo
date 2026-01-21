@@ -14,12 +14,20 @@ import {
   Send,
   Paperclip,
   Globe,
+  Share2,
+  Disc3,
+  PenTool,
+  BarChart3,
 } from "lucide-react";
 
 const navItems = [
   { label: "Dashboard", href: "/demo/artist", icon: LayoutDashboard },
   { label: "Schedule", href: "/demo/artist/schedule", icon: Calendar },
   { label: "Availability", href: "/demo/artist/availability", icon: Globe },
+  { label: "Social Media", href: "/demo/artist/social", icon: Share2 },
+  { label: "Releases", href: "/demo/artist/releases", icon: Disc3 },
+  { label: "Contracts", href: "/demo/artist/contracts", icon: PenTool },
+  { label: "Analytics", href: "/demo/artist/analytics", icon: BarChart3 },
   { label: "Documents", href: "/demo/artist/documents", icon: FileText },
   { label: "Earnings", href: "/demo/artist/earnings", icon: DollarSign },
   { label: "Travel", href: "/demo/artist/travel", icon: Plane },

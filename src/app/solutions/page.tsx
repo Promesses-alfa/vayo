@@ -6,8 +6,6 @@ import Footer from "@/components/Footer";
 import { 
   Users, 
   Music2, 
-  Theater, 
-  Building2,
   ArrowRight,
   CheckCircle2,
   Disc3,
@@ -75,36 +73,6 @@ const solutions = [
       "Settlement management",
     ],
   },
-  {
-    id: "performing-arts",
-    title: "For Performing Arts",
-    description: "Tailored solutions for theater, dance, and classical music agencies. Handle complex productions with multiple performers.",
-    icon: Theater,
-    color: "bg-gradient-to-br from-cyan-500 to-blue-500",
-    iconBg: "bg-cyan-50",
-    href: "/solutions/performing-arts",
-    features: [
-      "Cast & ensemble management",
-      "Venue technical specs",
-      "Multi-night run scheduling",
-      "Grant & sponsorship tracking",
-    ],
-  },
-  {
-    id: "enterprise",
-    title: "Enterprise",
-    description: "Custom solutions for large organizations. Dedicated support, advanced security, and tailored integrations.",
-    icon: Building2,
-    color: "bg-gradient-to-br from-emerald-500 to-teal-500",
-    iconBg: "bg-emerald-50",
-    href: "/solutions/enterprise",
-    features: [
-      "Custom integrations",
-      "Dedicated account manager",
-      "SLA guarantees",
-      "Advanced security & compliance",
-    ],
-  },
 ];
 
 export default function SolutionsPage() {
@@ -124,12 +92,12 @@ export default function SolutionsPage() {
               Built for <span className="text-[#00d4aa]">Your Industry</span>
             </h1>
             <p className="text-gray-500 text-lg max-w-2xl mx-auto font-medium">
-              VAYO adapts to your specific needs. Whether you&apos;re booking DJs, touring bands, 
-              or managing performing arts, we have the tools you need.
+              VAYO adapts to your specific needs. Whether you&apos;re a DJ agency, record label, 
+              festival organizer, or touring band, we have the tools you need.
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+          <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
             {solutions.map((solution) => (
               <div key={solution.id}>
                 <Link href={solution.href} className="block group h-full">
