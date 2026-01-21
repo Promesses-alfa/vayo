@@ -241,17 +241,24 @@ export default function PasswordGate({ children }: PasswordGateProps) {
                 className="text-center mb-8"
               >
                 <h1 
-                  className="text-4xl md:text-5xl font-black text-red-100 tracking-tight mb-1"
+                  className="text-5xl md:text-6xl font-black tracking-tight mb-2"
                   style={{ 
                     fontFamily: "var(--font-syne)",
-                    textShadow: "0 0 40px rgba(139,0,0,0.5), 0 2px 10px rgba(0,0,0,0.8)"
+                    background: "linear-gradient(180deg, #ffd700 0%, #ffb300 50%, #ff8c00 100%)",
+                    WebkitBackgroundClip: "text",
+                    WebkitTextFillColor: "transparent",
+                    textShadow: "0 0 60px rgba(255,215,0,0.6), 0 0 120px rgba(255,140,0,0.4)",
+                    filter: "drop-shadow(0 4px 8px rgba(0,0,0,0.8))"
                   }}
                 >
                   SCHECKER
                 </h1>
                 <p 
-                  className="text-sm text-red-300/60 font-medium tracking-[0.4em] uppercase"
-                  style={{ textShadow: "0 0 20px rgba(139,0,0,0.3)" }}
+                  className="text-base font-bold tracking-[0.5em] uppercase"
+                  style={{ 
+                    color: "#ffd700",
+                    textShadow: "0 0 30px rgba(255,215,0,0.5), 0 2px 4px rgba(0,0,0,0.8)"
+                  }}
                 >
                   Enterprises
                 </p>
